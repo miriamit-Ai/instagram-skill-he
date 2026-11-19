@@ -1,93 +1,57 @@
 ---
 name: ig-profile
 description: >-
-  Score an Instagram profile out of 100 against a 12-part rubric and rewrite
-  the parts that lose points - name field, bio, link, highlights, pinned three,
-  grid. Use when the user says "optimize my profile", "fix my bio", "score my
-  Instagram", "why don't people follow me", or pastes their profile and asks how
-  it reads.
-  Hebrew (Miriam AI edition): ציון לפרופיל ושכתוב הביו. עונה בעברית.
+  נותן לפרופיל אינסטגרם ציון מתוך 100 לפי 12 קריטריונים, ומשכתב את מה שמוריד
+  נקודות: שדה השם, הביו, הקישור, ההיילייטס, שלושת הפוסטים הנעוצים והתשבץ. להפעיל
+  כשמבקשים "תשפר לי את הפרופיל", "תתקן לי את הביו", "תן ציון לאינסטגרם שלי", "למה
+  לא עוקבים אחריי", או כשמדביקים את הפרופיל ושואלים איך הוא נקרא. Hebrew edition
+  by Miriam AI: profile score and bio rewrite.
 ---
 
-# ig-profile
+# ig-profile (גרסה עברית של Miriam AI)
 
-> **גרסה עברית של Miriam AI.** הסקיל הזה עובד בעברית כברירת מחדל:
-> - כל מה שמוצג למשתמשת ונכתב בשבילה, בעברית מדוברת וטבעית, לא עברית של מסמך.
-> - פנייה ברבים (אתם) כברירת מחדל, אלא אם `~/.claude/instagram/voice.md` אומר אחרת. לא מערבבים מגדרים באותו טקסט.
-> - כותבים "פרומפט", "סקיל", "ריל" ו"רילס" כמו שאומרים אותם.
-> - בלי הסימן — (קו מפריד ארוך). זה סימן מובהק לטקסט של AI.
-> - מספרים עם ₪ כשמדובר בכסף בישראל. בודקים שמספרים ומילים באנגלית בתוך משפט עברי מוצגים בסדר הנכון.
-> - שמות הפקודות, הקבצים והכלים (כמו `/ig-reel` או `swipe.py`) נשארים באנגלית.
-> - נוסחאות הפתיח בעברית נמצאות ב-`ig-reel/hooks_he.json`. הכלים ב-Python מזהים עברית לבד.
-> - אם המשתמשת כותבת באנגלית, עונים באנגלית לפי ההוראות למטה.
+כמעט כולם משפרים כאן את הדבר הלא נכון. הפרופיל הוא לא חלון ראווה שמשוטטים בו. הוא **מסך החלטה**, שמגיעים אליו מריל אחד, ויש לו בערך שלוש שניות לענות על שאלה אחת: יש פה עוד מזה, וזה בשבילי?
 
-Almost everybody optimises the wrong thing here. The profile is not a
-storefront people browse. It is a **decision screen**, arrived at from one
-reel, and it gets about three seconds to answer one question: is there more of
-that here, and is it for me.
+## קלט
 
-## Input
+מבקשים מהמשתמשת להדביק או לצלם מסך: שדה השם, שם המשתמש, הביו, לאן הקישור מוביל, שמות ההיילייטס, מה נעוץ, ותשעת השערים הראשונים בתשבץ. צילום של החלק העליון של הפרופיל ושתי השורות הראשונות בתשבץ מספיק לסבב ראשון.
 
-Ask the user to paste or screenshot: the name field, the handle, the bio, what
-the link points to, the highlight names, what is pinned, and the first nine
-grid covers. A screenshot of the top of the profile plus the first two grid
-rows is enough for a first pass.
+לא מתחברים לאינסטגרם בשמה.
 
-Do not log into Instagram on their behalf.
+## ציון
 
-## Score it
-
-Read `rubric.json` in this folder. Twelve items, 100 points, each with what
-full marks looks like and how it usually fails. Score every item, show the
-table, give the total. Be honest. Most profiles land in the 30s and 40s on the
-first pass and a generous score is useless.
+קוראים את `rubric.json` בתיקייה. שנים עשר פריטים, 100 נקודות, לכל אחד איך נראה ציון מלא ואיך זה בדרך כלל נכשל. נותנים ציון לכל פריט, מראים את הטבלה, נותנים סכום. בכנות. רוב הפרופילים מקבלים 30 עד 50 בסבב הראשון, וציון נדיב לא עוזר לאף אחד.
 
 ```
-PROFILE SCORE  38/100
+ציון פרופיל  38/100
 
-  name field       2/12   name only, no words anyone searches
-  bio first line   3/12   three nouns and a coffee emoji
-  pinned three     0/10   nothing pinned
-  highlights       2/8    "Random", "Life", "2023"
-  grid legibility  4/8    six of nine covers are a face mid-sentence
+  שדה השם          2/12   רק שם, בלי מילים שמחפשים
+  שורה ראשונה בביו 3/12   שלושה שמות עצם ואימוג'י של קפה
+  שלושה נעוצים     0/10   שום דבר לא נעוץ
+  היילייטס         2/8    "שונות", "חיים", "2023"
+  קריאות התשבץ     4/8    שישה מתוך תשעה שערים הם פנים באמצע משפט
   ...
 ```
 
-## Then rewrite, in this order
+## אחר כך משכתבים, בסדר הזה
 
-Fix in descending order of points lost. Do not rewrite everything at once, the
-user has to actually go and change each of these.
+מתקנים לפי כמה נקודות כל פריט הפסיד, מהגדול לקטן. לא משכתבים הכול בבת אחת, המשתמשת צריכה ללכת ולשנות כל אחד מהם בעצמה.
 
-**1. The name field (30 characters).** The bold line under the photo, not the
-handle. This is the field Instagram search matches against, and most accounts
-put a name in it and nothing else. Format that works:
-`{Name} | {what you do, in searched words}`. Give three options.
+**1. שדה השם (30 תווים).** השורה המודגשת מתחת לתמונה, לא שם המשתמש. זה השדה שהחיפוש באינסטגרם בודק, ורוב החשבונות שמים בו שם ותו לא. מבנה שעובד:
+`{שם} | {מה את עושה, במילים שמחפשים}`. בעברית בודקים מה אנשים באמת מקלידים בחיפוש: "בינה מלאכותית" או "AI", "שיווק" או "דיגיטל". נותנים שלוש אפשרויות.
 
-**2. Bio line one.** Who this is for and what changes. Not a job title, not
-adjectives, not a pipe-separated list of identities. The rest of the 150
-characters carries one piece of proof or one plain offer.
+**2. השורה הראשונה בביו.** למי זה ומה משתנה. לא תואר תפקיד, לא תארים, לא רשימת זהויות עם קווים מפרידים. שאר 150 התווים מחזיקים הוכחה אחת או הצעה פשוטה אחת.
 
-**3. The pinned three.** Three slots, three different jobs: the best proof, the
-clearest explanation of the offer, the best introduction to the person. This is
-the highest-leverage fix on the whole profile and it takes four taps. An
-unpinned grid shows whatever was posted last, which is a coin flip.
+**3. שלושת הנעוצים.** שלושה מקומות, שלושה תפקידים שונים: ההוכחה הכי טובה, ההסבר הכי ברור של ההצעה, וההיכרות הכי טובה עם האדם. זה התיקון עם ההשפעה הכי גדולה בכל הפרופיל, והוא לוקח ארבע לחיצות. תשבץ בלי נעוצים מראה את מה שפורסם אחרון, וזה הימור.
 
-**4. Highlights.** Four to six, named for the questions a buyer asks: Pricing,
-Results, How it works, About. Not "Random". Delete the rest.
+**4. היילייטס.** ארבעה עד שישה, עם שמות של השאלות שקונה שואל: מחירים, תוצאות, איך זה עובד, עליי. לא "שונות". את השאר מוחקים.
 
-**5. The link.** One destination that matches what the bio just promised. Five
-are allowed; two is already a menu and a menu converts worse than a door.
+**5. הקישור.** יעד אחד שמתאים למה שהביו הבטיח עכשיו. מותר חמישה, אבל שניים זה כבר תפריט, ותפריט ממיר פחות טוב מדלת.
 
-**6. Grid covers.** The first nine at thumbnail size. Reel covers get chosen,
-not left as whatever frame one was. Four words of text on a cover makes a grid
-readable in one glance.
+**6. שערי התשבץ.** תשעת הראשונים בגודל תמונה ממוזערת. את שער הריל בוחרים, לא משאירים את הפריים הראשון. ארבע מילים על שער הופכות את התשבץ לקריא במבט אחד. בעברית בודקים שהטקסט מימין לשמאל ושהוא לא נחתך בתצוגה הממוזערת.
 
-## Output
+## פלט
 
-Score table, then the rewrites as copy-ready blocks in fix-first order, each
-run through `/ig-human`. Re-score at the end and show the delta honestly. If
-the rewrite reaches 84 and not 98, say 84, and say what the rest needs, which
-is usually a grid, a story habit and a pinned post that does not exist yet.
-None of that is a rewrite.
+טבלת ציונים, ואחריה השכתובים כבלוקים מוכנים להעתקה לפי סדר התיקון, כל אחד אחרי מעבר ב-`/ig-human`. בסוף נותנים ציון מחדש ומראים את ההפרש בכנות. אם השכתוב מגיע ל-84 ולא ל-98, אומרים 84, ואומרים מה עוד חסר. בדרך כלל זה תשבץ, הרגל של סטוריז ופוסט נעוץ שעוד לא קיים. אף אחד מאלה הוא לא שכתוב.
 
-Nothing is saved to Instagram by this skill. The user edits each field.
+הסקיל הזה לא שומר שום דבר באינסטגרם. המשתמשת עורכת כל שדה בעצמה.

@@ -1,111 +1,80 @@
 ---
 name: ig-plan
 description: >-
-  Build the week on Instagram - what to post, which format, when, and who to
-  engage with. Use when the user says "plan my week", "what should I post",
-  "content calendar", "I have nothing to post about", or wants a posting
-  schedule and an engagement list.
-  Hebrew (Miriam AI edition): תוכנית תוכן לשבוע. עונה בעברית.
+  בונה את השבוע באינסטגרם: מה לפרסם, באיזה פורמט, מתי, ועם מי ליצור קשר. להפעיל
+  כשמבקשים "תתכנן לי את השבוע", "מה לפרסם", "לוח תוכן", "אין לי על מה לפרסם", או
+  כשרוצים לוח פרסומים ורשימת חשבונות למעורבות. Hebrew edition by Miriam AI:
+  weekly content plan.
 ---
 
-# ig-plan
+# ig-plan (גרסה עברית של Miriam AI)
 
-> **גרסה עברית של Miriam AI.** הסקיל הזה עובד בעברית כברירת מחדל:
-> - כל מה שמוצג למשתמשת ונכתב בשבילה, בעברית מדוברת וטבעית, לא עברית של מסמך.
-> - פנייה ברבים (אתם) כברירת מחדל, אלא אם `~/.claude/instagram/voice.md` אומר אחרת. לא מערבבים מגדרים באותו טקסט.
-> - כותבים "פרומפט", "סקיל", "ריל" ו"רילס" כמו שאומרים אותם.
-> - בלי הסימן — (קו מפריד ארוך). זה סימן מובהק לטקסט של AI.
-> - מספרים עם ₪ כשמדובר בכסף בישראל. בודקים שמספרים ומילים באנגלית בתוך משפט עברי מוצגים בסדר הנכון.
-> - שמות הפקודות, הקבצים והכלים (כמו `/ig-reel` או `swipe.py`) נשארים באנגלית.
-> - נוסחאות הפתיח בעברית נמצאות ב-`ig-reel/hooks_he.json`. הכלים ב-Python מזהים עברית לבד.
-> - אם המשתמשת כותבת באנגלית, עונים באנגלית לפי ההוראות למטה.
+חדר הבקרה. כל השאר בחבילה מבצעים, הסקיל הזה מחליט מה מבצעים. מריצים אותו פעם בשבוע, באותו יום.
 
-The control room. Everything else in this pack executes; this decides what gets
-executed. Run it once a week, on the same day.
+## קלט
 
-## Input
+אם `~/.claude/instagram/voice.md`, `swipe.md` ו-`log.md` קיימים, קוראים אותם. קובץ ההשראה הוא ההוכחה של המשתמשת עצמה מ-`/ig-viral` לאילו נוסחאות עובדות בתחום שלה עכשיו, והוא גובר על כל מה שכתוב כאן. היומן מונע מהתוכנית לחזור על נושא מהשבועיים האחרונים.
 
-If `~/.claude/instagram/voice.md`, `swipe.md` and `log.md` exist, read them.
-The swipe file is the user's own evidence from `/ig-viral` about which formulas
-are landing in their niche right now, and it outranks anything in this file.
-The log stops the plan repeating a theme from the last fortnight.
+אם הם לא קיימים, שואלים ארבעה דברים ורושמים אותם:
 
-If they do not exist, ask for four things and write them down:
+1. מה המשתמשת מוכרת, ולמי.
+2. שלושה או ארבעה נושאים שהיא רוצה להיות מזוהה איתם.
+3. מה באמת קרה השבוע: שיחה עם לקוחה, מספר, טעות, משהו שהיא בנתה, ויכוח שהיה לה. משם מגיעים הפוסטים.
+4. עשרה חשבונות שכדאי להיות נראית מולם.
 
-1. What the user sells, and to whom.
-2. The three or four themes they want to be known for.
-3. What actually happened this week: a client call, a number, a mistake, a
-   thing they built, an argument they had. This is where posts come from.
-4. Ten accounts worth being visible to.
+## מה לפרסם
 
-## What to post
+ארבעה עד חמישה פוסטים בשבוע, ולפחות שלושה מהם רילס. רילס הם הפורמט היחיד באינסטגרם שמגיע באופן קבוע לאנשים שלא עוקבים אחרי החשבון. קרוסלות מעמיקות עם מי שכבר עוקב. סטוריז הם יומיים ומתוכננים בנפרד.
 
-Four to five posts a week, and at least three of them Reels. Reels are the only
-format on Instagram that reliably reaches people who do not follow the account.
-Carousels go deep with the people who already do. Stories are daily and are
-planned separately.
+מגוונים לאורך השבוע, אף פעם לא שניים מאותו סוג ברצף:
 
-Mix across the week, never two of the same type back to back:
-
-| type | share | job |
+| סוג | כמות | התפקיד |
 | --- | --- | --- |
-| **Proof** | 1 per week | something that happened, with a number. Reel. |
-| **Teach** | 1 to 2 per week | one thing the viewer can do today. Reel or carousel. |
-| **Opinion** | 1 per week | a position that could lose you followers. Reel. |
-| **Story** | 1 per fortnight | a scene with a cost. Reel. |
-| **Offer** | 1 per fortnight | what you sell, said plainly, no apology. Carousel or stories. |
+| **הוכחה** | 1 בשבוע | משהו שקרה, עם מספר. ריל. |
+| **הדרכה** | 1 עד 2 בשבוע | דבר אחד שהצופה יכול לעשות היום. ריל או קרוסלה. |
+| **דעה** | 1 בשבוע | עמדה שיכולה לעלות בעוקבים. ריל. |
+| **סיפור** | 1 בשבועיים | סצנה עם מחיר. ריל. |
+| **הצעה** | 1 בשבועיים | מה את מוכרת, במילים פשוטות, בלי התנצלות. קרוסלה או סטוריז. |
 
-For each slot give: the theme, the specific angle from what actually happened
-this week, the format, and the hook formula number from `ig-reel/hooks.json`.
-Not a topic, an angle. "AI" is not a plan. "The proposal we lost because the
-draft had an em dash in it" is a Reel.
+לכל משבצת נותנים: את הנושא, את הזווית הספציפית ממה שבאמת קרה השבוע, את הפורמט, ואת מספר נוסחת הפתיח מ-`ig-reel/hooks_he.json`. לא נושא, זווית. "AI" זו לא תוכנית. "ההצעה שהפסדנו כי בטיוטה היה קו מפריד של AI" זה ריל.
 
-## When to post
+## מתי לפרסם
 
-Post when the user's audience is awake and not at work. For most consumer
-audiences that is early evening local time; for a business audience, early
-morning.
+מפרסמים כשהקהל ער ולא בעבודה. לקהל פרטי בישראל זה בדרך כלל בערב, בערך בין 20:00 ל-22:00. לקהל עסקי, בבוקר מוקדם. שבוע העבודה בישראל הוא ראשון עד חמישי. שישי בבוקר ומוצאי שבת הם זמנים טובים להרבה קהלים. אם הקהל שומר שבת, לא מתזמנים משישי אחר הצהריים עד צאת השבת.
 
-But say this plainly: **the hour matters far less than the first two seconds.**
-Instagram will keep showing a Reel for days if it performs, and will bury a
-well-timed one that does not. If the user is optimising posting times before
-their hooks work, they are polishing the wrong thing, and you should say so.
+אבל אומרים את זה בפשטות: **השעה חשובה הרבה פחות משתי השניות הראשונות.** אינסטגרם ימשיך להראות ריל במשך ימים אם הוא מצליח, ויקבור ריל שפורסם בזמן מושלם אם הוא לא. אם המשתמשת משפרת שעות פרסום לפני שהפתיחים שלה עובדים, היא מלטשת את הדבר הלא נכון, וצריך להגיד לה את זה.
 
-Anchor times to the audience's timezone, not the user's, if those differ.
+מעגנים את השעות לאזור הזמן של הקהל, לא של המשתמשת, אם הם שונים.
 
-## The engagement round, which is not optional
+## סבב המעורבות, שהוא לא אופציונלי
 
-20 minutes a day, before posting, not after. Build a list of 10:
+20 דקות ביום, לפני הפרסום, לא אחריו. בונים רשימה של 10:
 
-- **5 reach** - accounts with an audience the user wants, where a good comment
-  gets seen. Comment early, before the thread is 200 deep.
-- **3 peers** - same size, same field. This is the group that reciprocates.
-- **2 buyers** - people who could actually buy. Comment for weeks before any
-  DM, and never pitch in a comment.
+- **5 לחשיפה**: חשבונות עם קהל שהמשתמשת רוצה, שבהם תגובה טובה נראית. מגיבים מוקדם, לפני שיש 200 תגובות.
+- **3 עמיתים**: אותו גודל, אותו תחום. זו הקבוצה שמחזירה.
+- **2 קונים**: אנשים שבאמת יכולים לקנות. מגיבים במשך שבועות לפני כל הודעה פרטית, ואף פעם לא מוכרים בתגובה.
 
-Hand the list to `/ig-comment`.
+מעבירים את הרשימה ל-`/ig-comment`.
 
-## Output
+## פלט
 
 ```
-WEEK OF SEP 15
+שבוע 15.9
 
-MON  engage only  (20 min, list below)
-TUE  7:30pm  REEL      PROOF    #5  Time Collapse   - 5hr proposal to 20 min
-WED  stories only + engage
-THU  7:00pm  CAROUSEL  TEACH    Job B caption       - the 4-slide clause breakdown
-FRI  7:30pm  REEL      OPINION  #2  Negative Command - stop doing discovery calls
-SAT  -
-SUN  6:00pm  REEL      STORY    #21 Mid-Sentence    - the refund email
+ראשון  רק מעורבות  (20 דקות, הרשימה למטה)
+שני    20:30  ריל       הוכחה    #5  קיצור זמן      - הצעת מחיר מ-5 שעות ל-20 דקות
+שלישי  רק סטוריז ומעורבות
+רביעי  20:00  קרוסלה    הדרכה    כיתוב מסוג B     - פירוק הסעיף ב-4 שקופיות
+חמישי  20:30  ריל       דעה      #2  ציווי שלילי    - תפסיקו לעשות שיחות היכרות
+שישי   -
+מוצ"ש  21:00  ריל       סיפור    #21 באמצע משפט    - המייל של בקשת ההחזר
 
-STORIES  every day, 3 to 5 frames, question box on Thursday.
+סטוריז  כל יום, 3 עד 5 פריימים, תיבת שאלה ביום רביעי.
 
-ENGAGE  (5 reach / 3 peers / 2 buyers)
+מעורבות  (5 חשיפה / 3 עמיתים / 2 קונים)
   ...
 
-Say "write Tuesday" and I will draft it.
+תכתבי "תכתוב את שני" ואכין טיוטה.
 ```
 
-Write the plan to `~/.claude/instagram/plan.md` so the other skills can read
-it. Nothing is scheduled or posted anywhere. This is a plan and the user runs
-it.
+כותבים את התוכנית ל-`~/.claude/instagram/plan.md` כדי שהסקילים האחרים יוכלו לקרוא אותה. שום דבר לא מתוזמן ולא מתפרסם בשום מקום. זו תוכנית, והמשתמשת מבצעת אותה.

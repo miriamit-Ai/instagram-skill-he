@@ -1,189 +1,138 @@
 ---
 name: ig-viral
 description: >-
-  Go and find the reels that are actually working right now in the user's
-  niche, rank them by how far each beat its own account, name the hook formula
-  each one used, and turn that into a swipe file they can shoot from. Use when
-  the user says "find viral videos", "what's working right now", "what are
-  people posting in my niche", "reverse engineer this account", "build me a
-  swipe file", "why is this reel doing numbers", or asks what to make next and
-  has no evidence to answer with.
-  Hebrew (Miriam AI edition): מה ויראלי בתחום, ניתוח רילס מצליחים. עונה בעברית.
+  מוצא את הרילס שבאמת עובדים עכשיו בתחום של המשתמשת, מדרג אותם לפי פי כמה כל
+  אחד עבר את הממוצע של החשבון שלו, מזהה את נוסחת הפתיח של כל אחד, והופך את זה
+  לקובץ השראה שאפשר לצלם ממנו. להפעיל כשמבקשים "תמצא סרטונים ויראליים", "מה עובד
+  עכשיו", "מה מפרסמים בתחום שלי", "תפרק לי את החשבון הזה", "תבנה לי קובץ השראה",
+  "למה הריל הזה מתפוצץ", או כששואלים מה לעשות עכשיו ואין הוכחות לענות. Hebrew
+  edition by Miriam AI: viral research and swipe file.
 ---
 
-# ig-viral
+# ig-viral (גרסה עברית של Miriam AI)
 
-> **גרסה עברית של Miriam AI.** הסקיל הזה עובד בעברית כברירת מחדל:
-> - כל מה שמוצג למשתמשת ונכתב בשבילה, בעברית מדוברת וטבעית, לא עברית של מסמך.
-> - פנייה ברבים (אתם) כברירת מחדל, אלא אם `~/.claude/instagram/voice.md` אומר אחרת. לא מערבבים מגדרים באותו טקסט.
-> - כותבים "פרומפט", "סקיל", "ריל" ו"רילס" כמו שאומרים אותם.
-> - בלי הסימן — (קו מפריד ארוך). זה סימן מובהק לטקסט של AI.
-> - מספרים עם ₪ כשמדובר בכסף בישראל. בודקים שמספרים ומילים באנגלית בתוך משפט עברי מוצגים בסדר הנכון.
-> - שמות הפקודות, הקבצים והכלים (כמו `/ig-reel` או `swipe.py`) נשארים באנגלית.
-> - נוסחאות הפתיח בעברית נמצאות ב-`ig-reel/hooks_he.json`. הכלים ב-Python מזהים עברית לבד.
-> - אם המשתמשת כותבת באנגלית, עונים באנגלית לפי ההוראות למטה.
+סקיל המחקר. כל השאר בחבילה כותבים, הסקיל הזה הולך ומסתכל. מריצים אותו פעם בחודש, לא כל יום. נוסחאות מחזיקות עונה.
 
-The research skill. Everything else in this pack writes; this one goes and
-looks. Run it monthly, not daily. Formulas last a season.
-
-One tool lives in this folder and it runs:
+בתיקייה יש כלי אחד, והוא רץ:
 
 ```bash
 python3 swipe.py captured.tsv --out ~/.claude/instagram/swipe.md
 ```
 
-## The one idea that makes this worth doing
+## הרעיון היחיד שבגללו זה שווה את המאמץ
 
-**Raw views are not evidence.** An account with two million followers doing
-400,000 views had a quiet Tuesday. An account with four thousand followers
-doing 400,000 views found something, and that something is copyable.
+**מספר צפיות גולמי הוא לא הוכחה.** חשבון עם שני מיליון עוקבים שעשה 400 אלף צפיות היה ביום שלישי שקט. חשבון עם ארבעת אלפים עוקבים שעשה 400 אלף צפיות מצא משהו, ואת המשהו הזה אפשר להעתיק.
 
-So everything here ranks on the **outlier multiple**: views divided by that
-account's own recent median. Anything above 3x is a signal. Anything below 1.5x
-is that account's normal day and it teaches you nothing, no matter how big the
-number looks.
+לכן כל הדירוג כאן לפי **מכפיל החריגה**: צפיות חלקי החציון האחרון של אותו חשבון. כל מה שמעל פי 3 הוא סימן. כל מה שמתחת לפי 1.5 הוא יום רגיל של החשבון ולא מלמד כלום, לא משנה כמה המספר נראה גדול.
 
-Collect accounts **within about 10x of the user's own size**. A formula that
-works at 2M followers often works because it is at 2M followers.
+אוספים חשבונות **בטווח של בערך פי 10 מהגודל של המשתמשת**. נוסחה שעובדת ב-2 מיליון עוקבים עובדת הרבה פעמים בגלל ה-2 מיליון.
 
-## Step 1: pick the accounts
+## שלב 1: בוחרים חשבונות
 
-Ask the user for 6 to 12 accounts, or propose them and get approval:
+מבקשים מהמשתמשת 6 עד 12 חשבונות, או מציעים ומקבלים אישור:
 
-- **4 direct** - same niche, same offer, slightly ahead.
-- **4 adjacent** - different niche, same audience. This is where formats get
-  borrowed from before anybody in the niche has them.
-- **2 to 4 outsized** - much bigger accounts, for format only, never for
-  cadence or tone.
+- **4 ישירים**: אותו תחום, אותה הצעה, קצת לפניה.
+- **4 משיקים**: תחום אחר, אותו קהל. מכאן לוקחים פורמטים לפני שמישהו בתחום משתמש בהם.
+- **2 עד 4 גדולים בהרבה**: רק בשביל הפורמט, אף פעם לא בשביל הקצב או הטון.
 
-Also ask them to open their own **Saved collection**. It is the fastest and
-most relevant corpus that exists and it is already filtered by their taste.
+מבקשים ממנה גם לפתוח את **אוסף השמורים** שלה. זה המאגר הכי מהיר ורלוונטי שיש, והוא כבר מסונן לפי הטעם שלה.
 
-## Step 2: go and look
+## שלב 2: הולכים ומסתכלים
 
-Use whatever browsing tool this session actually has: an in-app browser, a
-browser extension connected to the user's own Chrome, or a computer-use tool.
-There is no API for this and there does not need to be, because the volume is
-small enough to read.
+משתמשים בכלי הגלישה שיש בפועל בסשן: דפדפן מובנה, תוסף שמחובר לכרום של המשתמשת, או שליטה במחשב. אין לזה API ואין צורך בכזה, כי הכמות קטנה מספיק כדי לקרוא.
 
-**Rules that are not negotiable:**
+**כללים שאין עליהם ויכוח:**
 
-- **Never log into Instagram on the user's behalf and never ask for a
-  password.** If a page needs a login, the user is the one who is already
-  logged in. Drive their browser with them present, or ask them to paste.
-- **This is reading, not scraping.** Ten accounts, a dozen reels each, at human
-  speed. Automated collection at volume violates Instagram's Terms of Use and
-  gets accounts action-blocked. Do not build a crawler, do not use a scraping
-  service, and do not loop this in the background.
-- **Copy the formula, never the video.** The hook shape, the structure, the
-  length, the pattern of cuts. Not their script, not their voice, not their
-  edit. Attribute every row in the swipe file to the account it came from.
+- **אף פעם לא מתחברים לאינסטגרם בשם המשתמשת ואף פעם לא מבקשים סיסמה.** אם עמוד דורש התחברות, המשתמשת היא זו שכבר מחוברת. מפעילים את הדפדפן שלה כשהיא נוכחת, או מבקשים שתדביק.
+- **זו קריאה, לא גריפה.** עשרה חשבונות, תריסר רילס מכל אחד, בקצב של בן אדם. איסוף אוטומטי בכמויות מפר את תנאי השימוש של אינסטגרם ומוביל לחסימת פעולות בחשבון. לא בונים זחלן, לא משתמשים בשירות גריפה, ולא מריצים את זה ברקע בלולאה.
+- **מעתיקים את הנוסחה, אף פעם לא את הסרטון.** צורת הפתיח, המבנה, האורך, דפוס החיתוכים. לא את התסריט שלהם, לא את הקול שלהם, לא את העריכה שלהם. כל שורה בקובץ ההשראה מקבלת את החשבון שממנו היא הגיעה.
 
-**What to capture per reel**, in the creator's own words:
+**מה לאסוף מכל ריל**, במילים של היוצר:
 
-| field | notes |
+| שדה | הערות |
 | --- | --- |
-| account | handle |
-| followers | from the profile |
-| median | eyeball the last 12 reels and take the middle view count |
-| views | this reel |
-| hook | the first line, spoken or on screen, verbatim including bad grammar |
-| on-screen | the first text card, if different |
-| length | seconds |
-| cta | what they asked for at the end |
+| account | שם המשתמש |
+| followers | מהפרופיל |
+| median | מסתכלים על 12 הרילס האחרונים ולוקחים את מספר הצפיות האמצעי |
+| views | הריל הזה |
+| hook | השורה הראשונה, מדוברת או על המסך, מילה במילה כולל שגיאות |
+| on-screen | כרטיס הטקסט הראשון, אם הוא שונה |
+| length | שניות |
+| cta | מה ביקשו בסוף |
 
-Median is the important one. Without it you are back to ranking by follower
-count, which is the thing this skill exists to stop.
+החציון הוא החשוב. בלעדיו חוזרים לדרג לפי מספר עוקבים, וזה בדיוק מה שהסקיל הזה נועד להפסיק.
 
-**When Instagram will not show you enough:** the same hook grammar runs on
-YouTube Shorts, where view counts and transcripts are public and no login is
-involved. It is a legitimate second corpus, and the spoken hook is easier to
-get:
+**כשאינסטגרם לא מראה מספיק:** אותה שפת פתיחים רצה ב-YouTube Shorts, שם מספרי הצפיות והתמלולים פומביים ואין צורך בהתחברות. זה מאגר שני לגיטימי, וקל יותר להשיג בו את הפתיח המדובר:
 
 ```bash
-# view counts for a channel's shorts
+# מספרי צפיות של השורטס בערוץ
 python3 -m yt_dlp --flat-playlist --playlist-end 40 -J \
   "https://www.youtube.com/@HANDLE/shorts" > channel.json
 
-# the spoken first line of one short, from its auto-captions
-python3 -m yt_dlp --skip-download --write-auto-subs --sub-langs "en.*" \
+# השורה המדוברת הראשונה של שורט אחד, מהכתוביות האוטומטיות (עברית: he או iw)
+python3 -m yt_dlp --skip-download --write-auto-subs --sub-langs "he.*,iw.*,en.*" \
   --sub-format json3 -o hook "https://www.youtube.com/watch?v=VIDEO_ID"
 ```
 
-Take every caption word with a timestamp under 3.0 seconds. That is the hook,
-as said, not as written.
+לוקחים כל מילה בכתוביות עם חותמת זמן מתחת ל-3.0 שניות. זה הפתיח, כמו שנאמר, לא כמו שנכתב.
 
-## Step 3: rank it
+## שלב 3: מדרגים
 
-Fill a tab-separated file with a header row and run the script:
+ממלאים קובץ עם עמודות מופרדות בטאב ושורת כותרת, ומריצים את הכלי:
 
 ```
 account	followers	median	views	hook
-@someone	48000	11000	412000	nobody tells you your first 30 reels are supposed to flop
+@someone	48000	11000	412000	אף אחד לא מספר לכם ש-30 הרילס הראשונים שלכם אמורים להיכשל
 ```
 
 ```bash
 python3 swipe.py captured.tsv --out ~/.claude/instagram/swipe.md
 ```
 
-It computes the outlier multiple, names the hook formula using the same 26
-formulas `/ig-reel` writes from, scores each hook with `hookscore.py`, and
-prints what separates the top third from the bottom third.
+הכלי מחשב את מכפיל החריגה, מזהה את נוסחת הפתיח לפי אותן 26 נוסחאות ש-`/ig-reel` כותב מהן (בעברית ובאנגלית), נותן ציון לכל פתיח עם `hookscore.py`, ומדפיס מה מבדיל בין השליש העליון לשליש התחתון.
 
-## Step 4: say what it means, carefully
+## שלב 4: אומרים מה זה אומר, בזהירות
 
-Report three things and no more:
+מדווחים שלושה דברים, לא יותר:
 
-1. **Which formulas over-index** in the top third, with counts. Two formulas
-   appearing four times each across six accounts is a finding. One appearing
-   twice is not.
-2. **What the top third have in common structurally** that the bottom third do
-   not: hook length, whether the payoff is visual, whether the first frame
-   moves, where the ask is.
-3. **The unclassified rows.** Every hook the classifier could not name is
-   either noise or a formula that is not in `hooks.json` yet. Read them by
-   hand. This is the most valuable column in the output and it is the reason
-   the script prints the count.
+1. **אילו נוסחאות מופיעות יותר מהצפוי** בשליש העליון, עם ספירה. שתי נוסחאות שמופיעות ארבע פעמים כל אחת בשישה חשבונות זה ממצא. אחת שמופיעה פעמיים, לא.
+2. **מה משותף מבחינת מבנה לשליש העליון** ולא לתחתון: אורך הפתיח, האם התמורה ויזואלית, האם הפריים הראשון זז, איפה הבקשה.
+3. **השורות שלא סווגו.** כל פתיח שהמסווג לא זיהה הוא או רעש או נוסחה שעוד לא נמצאת ב-`hooks_he.json`. קוראים אותם ידנית. זו העמודה הכי חשובה בפלט, ובגלל זה הכלי מדפיס את הספירה.
 
-Then state the sample size and the confidence in plain words. Forty reels
-across six accounts supports a claim. Twelve does not, and saying so is the
-difference between research and horoscopes.
+ואז אומרים את גודל המדגם ואת רמת הביטחון במילים פשוטות. ארבעים רילס משישה חשבונות תומכים בטענה. שנים עשר לא, ולהגיד את זה זה ההבדל בין מחקר להורוסקופ.
 
-## Step 5: turn it into something to shoot
+## שלב 5: הופכים את זה למשהו לצלם
 
-For the top three formulas, write **the user's version**: their own story,
-their own number, in the shape that is working. Hand each one to `/ig-reel`
-with the formula id already chosen.
+לשלוש הנוסחאות המובילות כותבים **את הגרסה של המשתמשת**: הסיפור שלה, המספר שלה, בצורה שעובדת. מעבירים כל אחת ל-`/ig-reel` עם מספר הנוסחה כבר בחור.
 
-Never hand back "make a reel like this one". Hand back a hook line they could
-say tomorrow.
+אף פעם לא מחזירים "תעשי ריל כמו זה". מחזירים משפט פתיח שהיא יכולה להגיד מחר.
 
-## Output
+## פלט
 
 ```
-SWIPE  ·  38 reels  ·  7 accounts  ·  baseline: account median
+קובץ השראה  ·  38 רילס  ·  7 חשבונות  ·  בסיס: חציון החשבון
 
-OUTLIERS (above 3x)
-  38.4x  hook 86  #3  Nobody Tells You   @acct_a    412,000  (median 10,700)
-  11.2x  hook 79  #9  The Steal          @acct_c    180,000  (median 16,100)
+חריגים (מעל פי 3)
+  פי 38.4  פתיח 86  #3  אף אחד לא מספר לכם   @acct_a    412,000  (חציון 10,700)
+  פי 11.2  פתיח 79  #9  תגנבו את זה           @acct_c    180,000  (חציון 16,100)
   ...
 
-WHAT IS OVER-INDEXING
-  #3 Nobody Tells You   x5 in the top third, 0 in the bottom
-  #2 Negative Command   x4
-  median hook length    8 words up top, 19 at the bottom
+מה מופיע יותר מהצפוי
+  #3 אף אחד לא מספר לכם   5 פעמים בשליש העליון, 0 בתחתון
+  #2 ציווי שלילי           4 פעמים
+  אורך פתיח חציוני         8 מילים למעלה, 19 למטה
 
-UNCLASSIFIED (6)
-  Two of these are the same shape and it is not in hooks.json: a hook that
-  opens on someone else's comment read out loud. Worth adding.
+לא סווגו (6)
+  שניים מהם באותה צורה והיא לא נמצאת ב-hooks_he.json: פתיח שנפתח בתגובה
+  של מישהו אחר שמוקראת בקול. שווה להוסיף.
 
-YOUR VERSION
-  #3  "Nobody tells you the first 20 proposals are supposed to lose."
+הגרסה שלכם
+  #3  "אף אחד לא מספר לכם ש-20 הצעות המחיר הראשונות אמורות להפסיד."
   ...
 ```
 
-Write the swipe file to `~/.claude/instagram/swipe.md`. `/ig-reel` and
-`/ig-plan` both read it, which is the point: after this runs once, the rest of
-the pack is working from the user's own evidence instead of from defaults.
+המספרים בדוגמה הזאת הם להמחשה של הפורמט בלבד.
 
-Nothing is posted, followed, liked or messaged by this skill. It reads.
+כותבים את קובץ ההשראה ל-`~/.claude/instagram/swipe.md`. גם `/ig-reel` וגם `/ig-plan` קוראים אותו, וזו כל הנקודה: אחרי ריצה אחת, שאר החבילה עובדת מההוכחות של המשתמשת ולא מברירות מחדל.
+
+הסקיל הזה לא מפרסם, לא עוקב, לא עושה לייק ולא שולח הודעות. הוא קורא.
