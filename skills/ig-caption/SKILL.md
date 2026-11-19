@@ -1,130 +1,92 @@
 ---
 name: ig-caption
 description: >-
-  Write the Instagram caption - the line that survives the "... more" cut, the
-  body, the single ask, the search terms and the three hashtags - and lint it
-  before it goes out. Use when the user says "write the caption", "caption this",
-  "what do I put in the description", has a reel or a carousel ready and needs
-  the text, or asks about hashtags.
-  Hebrew (Miriam AI edition): כיתוב לפוסט או לריל. עונה בעברית.
+  כותב את הכיתוב לאינסטגרם: השורה ששורדת את החיתוך של "עוד", הגוף, הבקשה האחת,
+  מילות החיפוש ועד חמישה האשטגים, ובודק אותו לפני שהוא יוצא. להפעיל כשמבקשים
+  "תכתוב כיתוב", "כיתוב לזה", "מה לכתוב בתיאור", כשיש ריל או קרוסלה מוכנים וצריך
+  טקסט, או כששואלים על האשטגים. Hebrew edition by Miriam AI: caption writer and
+  linter.
 ---
 
-# ig-caption
+# ig-caption (גרסה עברית של Miriam AI)
 
-> **גרסה עברית של Miriam AI.** הסקיל הזה עובד בעברית כברירת מחדל:
-> - כל מה שמוצג למשתמשת ונכתב בשבילה, בעברית מדוברת וטבעית, לא עברית של מסמך.
-> - פנייה ברבים (אתם) כברירת מחדל, אלא אם `~/.claude/instagram/voice.md` אומר אחרת. לא מערבבים מגדרים באותו טקסט.
-> - כותבים "פרומפט", "סקיל", "ריל" ו"רילס" כמו שאומרים אותם.
-> - בלי הסימן — (קו מפריד ארוך). זה סימן מובהק לטקסט של AI.
-> - מספרים עם ₪ כשמדובר בכסף בישראל. בודקים שמספרים ומילים באנגלית בתוך משפט עברי מוצגים בסדר הנכון.
-> - שמות הפקודות, הקבצים והכלים (כמו `/ig-reel` או `swipe.py`) נשארים באנגלית.
-> - נוסחאות הפתיח בעברית נמצאות ב-`ig-reel/hooks_he.json`. הכלים ב-Python מזהים עברית לבד.
-> - אם המשתמשת כותבת באנגלית, עונים באנגלית לפי ההוראות למטה.
-
-One tool lives in this folder and it runs:
+בתיקייה יש כלי אחד, והוא רץ:
 
 ```bash
 python3 caption.py caption.txt
-python3 caption.py caption.txt --keywords "client proposals,agency pricing"
+python3 caption.py caption.txt --keywords "הצעות מחיר,תמחור לעסקים"
 ```
 
-It prints the caption the way the feed prints it: the first 125 characters in a
-box, everything else behind the tap. Read that box before you read anything
-else you wrote.
+הוא מדפיס את הכיתוב כמו שהפיד מציג אותו: 125 התווים הראשונים בתוך מסגרת, וכל השאר מאחורי הלחיצה. קוראים את המסגרת הזאת לפני כל דבר אחר שכתבתם. הכלי מזהה בקשות בעברית ("תגיבו", "שלחו לי בפרטי", "תשמרו את זה"), האשטגים בעברית, ₪ ומספרים שכתובים במילים.
 
-## First, decide which job this caption has
+## קודם מחליטים מה התפקיד של הכיתוב
 
-This is the decision that ruins captions when it is skipped.
+זו ההחלטה שהורסת כיתובים כשמדלגים עליה.
 
-**Job A: the video already hooked them.** A Reel carries its own hook in the
-first two seconds, spoken and on screen. The caption is not a second hook and
-competing with the video is how you lose both. Its job is the ask, the context
-that makes the ask make sense, and the words people search.
+**תפקיד A: הסרטון כבר תפס אותם.** ריל נושא את הפתיח שלו בשתי השניות הראשונות, בדיבור ועל המסך. הכיתוב הוא לא פתיח שני, ולהתחרות בסרטון זו הדרך להפסיד בשניהם. התפקיד שלו הוא הבקשה, ההקשר שגורם לבקשה להיות הגיונית, והמילים שמחפשים.
 
-**Job B: the caption is the content.** A photo, a single image, a carousel
-cover that opens a loop. Here line one is the hook and it works exactly like a
-Reel hook: concrete, short, and cut off at a cliff rather than mid-clause.
+**תפקיד B: הכיתוב הוא התוכן.** תמונה, תמונה בודדת, שער של קרוסלה שפותח שאלה. כאן השורה הראשונה היא הפתיח, והיא עובדת בדיוק כמו פתיח של ריל: מוחשית, קצרה, ונחתכת בנקודת מתח ולא באמצע משפט.
 
-Ask which one you are writing. If the user has a Reel with a strong hook,
-write A and say why.
+שואלים איזה מהשניים כותבים. אם למשתמשת יש ריל עם פתיח חזק, כותבים A ומסבירים למה.
 
-## The shape
+## המבנה
 
 ```
-Line 1      125 characters of visible space. Job A: the ask, plainly.
-            Job B: the hook.
-            Never a greeting, never a hashtag, never an emoji as the first
-            character.
-Body        short paragraphs, one line of white space between each. Two to six
-            of them. This is where the search terms live.
-The ask     one. Comment a keyword, save it, or DM. One.
-Hashtags    up to five, on their own line at the bottom, or none.
+שורה 1     125 תווים נראים. תפקיד A: הבקשה, במילים פשוטות.
+           תפקיד B: הפתיח.
+           אף פעם לא ברכה, לא האשטג, ולא אימוג'י כתו ראשון.
+גוף        פסקאות קצרות, שורה ריקה בין כל אחת. שתיים עד שש.
+           כאן נמצאות מילות החיפוש.
+הבקשה      אחת. להגיב מילת מפתח, לשמור, או לשלוח הודעה. אחת.
+האשטגים    עד חמישה, בשורה נפרדת בסוף, או בכלל לא.
 ```
 
-Limit is 2,200 characters and almost nothing needs 2,200. A caption that earns
-the tap and then delivers 600 characters beats one that delivers 1,800.
+המגבלה היא 2,200 תווים וכמעט שום דבר לא צריך 2,200. כיתוב שמרוויח את הלחיצה ואז נותן 600 תווים עדיף על כזה שנותן 1,800.
 
-## Hashtags, honestly
+## האשטגים, בכנות
 
-Hashtags are not a reach lever any more, and the platform has now said so with
-a product change. **Instagram capped hashtags at five per post on 18 December
-2025**, down from thirty, telling creators that "using fewer (up to 5) more
-targeted hashtags, rather than many generic ones" performs better. Adam Mosseri
-had already said in February 2025 that hashtags do not work to increase reach
-and are a label, not a distribution lever.
+האשטגים הם כבר לא מנוף לחשיפה, והפלטפורמה אמרה את זה בשינוי במוצר. **אינסטגרם הגביל את ההאשטגים לחמישה בפוסט ובריל בדצמבר 2025**, במקום שלושים, ואמר ליוצרים שמעט האשטגים ממוקדים (עד 5) עובדים טוב יותר מהרבה כלליים. אדם מוסרי אמר כבר בפברואר 2025 שהאשטגים לא מגדילים חשיפה, ושהם תווית ולא מנוף להפצה.
 
-So: up to five, specific, as topic labels. If the user has a block of twenty
-saved in their notes app, that block is now dead weight and the linter will
-fail it.
+לכן: עד חמישה, ספציפיים, כתוויות נושא. אם למשתמשת יש בלוק של עשרים שמור באפליקציית הפתקים, הבלוק הזה הוא עכשיו משקל מת והבודק יכשיל אותו.
 
-`#viral`, `#fyp`, `#explorepage`, `#foryou` describe nothing. Cut them.
+`#viral`, `#fyp`, `#explorepage`, `#foryou`, `#ויראלי` לא מתארים כלום. מוחקים אותם.
 
-## Search terms matter more than hashtags now
+## מילות חיפוש חשובות יותר מהאשטגים
 
-Instagram search reads the caption text. So the phrase the user wants to be
-found for goes in the caption as a phrase a human would type, in a sentence
-that reads normally. "Client proposals" as words in line three, not
-"#clientproposals" in a block at the bottom.
+החיפוש באינסטגרם קורא את טקסט הכיתוב. לכן הביטוי שהמשתמשת רוצה שימצאו אותה לפיו נכנס לכיתוב כמו שבן אדם היה מקליד אותו, בתוך משפט רגיל. "הצעות מחיר" כמילים בשורה השלישית, לא "#הצעותמחיר" בבלוק בסוף. בעברית בודקים גם את הצורה שמחפשים בפועל: יחיד או רבים, עם ה' הידיעה או בלי, עברית או אנגלית ("בינה מלאכותית" מול "AI").
 
-Ask for two or three of those terms, then pass them to the linter:
+מבקשים שניים או שלושה ביטויים כאלה, ומעבירים אותם לבודק:
 
 ```bash
-python3 caption.py draft.txt --keywords "client proposals,agency pricing"
+python3 caption.py draft.txt --keywords "הצעות מחיר,תמחור לעסקים"
 ```
 
-## Rules
+## כללים
 
-- **No link in the caption.** Captions are not clickable. A URL in the body is
-  dead text that says "I do not use this platform". Bio or DM.
-- **One ask.** Two asks is the same as none. `caption.py` counts them.
-- **The keyword ask needs a keyword people can type.** One word, no spaces, no
-  emoji, and say it out loud in the video too. `Comment CONTRACT` works.
-  `Comment "the contract guide"` does not.
-- **Write the first comment separately** if there is a link. Say so in the
-  receipt.
-- **Emoji as punctuation, not decoration.** The linter flags anything over
-  4 per 100 characters.
-- **Alt text is worth 20 seconds.** For carousels and photos, write it. It is
-  read by screen readers and by Instagram.
+- **בלי קישור בכיתוב.** כיתובים לא לחיצים. כתובת בגוף הטקסט היא טקסט מת שאומר "אני לא משתמשת בפלטפורמה הזאת". ביו או הודעה פרטית.
+- **בקשה אחת.** שתי בקשות זה כמו אף אחת. `caption.py` סופר אותן.
+- **בקשת מילת מפתח צריכה מילה שאפשר להקליד.** מילה אחת, בלי רווחים, בלי אימוג'י, ואומרים אותה בקול גם בסרטון. `תגיבו חוזה` עובד. `תגיבו "המדריך לחוזים"` לא. בעברית בוחרים מילה בלי אותיות שמתבלבלות בהקלדה, ובודקים שהאוטומציה מזהה גם את הצורה עם אות שימוש (חוזה, החוזה).
+- **כותבים את התגובה הראשונה בנפרד** אם יש קישור. אומרים את זה בסיכום.
+- **אימוג'י כפיסוק, לא כקישוט.** הבודק מסמן כל מה שמעל 4 ל-100 תווים.
+- **טקסט חלופי שווה 20 שניות.** בקרוסלות ובתמונות כותבים אותו. קוראי מסך קוראים אותו, וגם אינסטגרם.
+- **בלי הסימן —.** בכיתוב הוא בולט יותר מבכל מקום אחר.
 
-## The loop
+## התהליך
 
-1. Decide Job A or Job B and say which.
-2. Draft it.
-3. Run `/ig-human` on it. Captions are short, so slop is louder here than
-   anywhere else in the pack.
-4. Run `caption.py` with the user's search terms. Fix every FAIL. Decide on
-   every WARN out loud rather than silently.
-5. Print the copy-ready block, then the receipt:
+1. מחליטים תפקיד A או B ואומרים איזה.
+2. כותבים טיוטה.
+3. מריצים עליה `/ig-human`. כיתובים קצרים, אז ביטויי AI שחוקים בולטים כאן יותר מבכל מקום אחר בחבילה.
+4. מריצים את `caption.py` עם מילות החיפוש של המשתמשת. מתקנים כל FAIL. על כל WARN מחליטים בקול, לא בשקט.
+5. מדפיסים את הבלוק המוכן להעתקה, ואחריו את הסיכום:
 
 ```
-CAPTION READY
-job:        A - the reel carries the hook
-visible:    118 of 125 characters used before the cut
-ask:        one, comment CONTRACT
-hashtags:   3
-search:     "client proposals" in line 3, "agency pricing" in line 5
-linter:     READY
+הכיתוב מוכן
+תפקיד:      A - הריל נושא את הפתיח
+נראה:       118 מתוך 125 תווים לפני החיתוך
+בקשה:       אחת, תגיבו חוזה
+האשטגים:    3
+חיפוש:      "הצעות מחיר" בשורה 3, "תמחור לעסקים" בשורה 5
+בודק:       READY
 ```
 
-Nothing is posted. The user pastes it.
+שום דבר לא מתפרסם. המשתמשת מדביקה בעצמה.

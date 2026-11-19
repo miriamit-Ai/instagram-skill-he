@@ -35,12 +35,12 @@ HASHTAG_LIMIT = 5        # Instagram's cap per post or reel since 18 Dec 2025,
                          # rather than many generic ones, can improve both your
                          # content's performance and people's experience".
 
-HASHTAG_RE = re.compile(r"(?:^|\s)(#[A-Za-z0-9_]+)")
+HASHTAG_RE = re.compile(r"(?:^|\s)(#[\u05D0-\u05EAA-Za-z0-9_]+)")  # Hebrew hashtags too
 MENTION_RE = re.compile(r"(?:^|\s)(@[A-Za-z0-9_.]+)")
 LINK_RE = re.compile(r"https?://\S+|\bwww\.\S+|\b[a-z0-9-]+\.(?:com|co|io|net|org|ai|app)/\S*",
                      re.IGNORECASE)
 EMOJI_RE = re.compile(r"[\U0001F300-\U0001FAFF☀-➿←-⇿️]")
-CONCRETE_RE = re.compile(r"\$\s?\d|\b\d[\d,.]*\b|(?<!^)\b[A-Z][a-z]{2,}\b", re.MULTILINE)
+CONCRETE_RE = re.compile(r"(?<![\u05D0-\u05EA])(?:[ובלמשה]{0,2})(?:שתיים|שניים|שלוש|שלושה|ארבע|ארבעה|חמש|חמישה|שש|שישה|שבע|שבעה|שמונה|תשע|עשר|עשרה|עשרים|שלושים|ארבעים|חמישים|מאה|אלף|אלפים|מיליון|חצי|פעמיים)(?![\u05D0-\u05EA])|[$₪]\s?\d|\d\s?₪|\b\d[\d,.]*\b|(?<!^)\b[A-Z][a-z]{2,}\b", re.MULTILINE)
 
 ASKS = [
     (re.compile(r"(?i)\bcomment (?:the word |\")?[A-Z0-9]{2,}\b"), "comment a keyword"),
@@ -51,6 +51,14 @@ ASKS = [
     (re.compile(r"(?i)\blink in (?:my )?bio\b"), "link in bio"),
     (re.compile(r"(?i)\b(?:swipe|tap) (?:through|left|right|for|to)\b"), "swipe or tap"),
     (re.compile(r"(?i)\btell me\b|\bwhat would you\b|\bwhich one\b"), "answer a question"),
+    # Hebrew (Miriam AI edition)
+    (re.compile(r"(?:תגיבו|תכתבו|כתבו|הגיבו|תגיבי|תכתבי)\s+(?:לי\s+)?(?:בתגובות\s+)?(?:את המילה\s+)?[\"״']?\S{2,}"), "להגיב מילת מפתח"),
+    (re.compile(r"(?:שלחו|תשלחו|כתבו|תכתבו) לי (?:בפרטי|הודעה|בדיירקט)"), "הודעה בפרטי"),
+    (re.compile(r"(?:תשמרו|שמרו|תשמרי) (?:את )?(?:זה|הפוסט|הריל)"), "לשמור"),
+    (re.compile(r"(?:תשתפו|שתפו|תשלחו) (?:את )?(?:זה|הפוסט|הריל|למישהו|לחבר|לחברה)"), "לשתף"),
+    (re.compile(r"(?:תעקבו|עקבו|תעקבי)\b"), "לעקוב"),
+    (re.compile(r"קישור ב?ביו"), "קישור בביו"),
+    (re.compile(r"(?:ספרו לי|תגידו לי|מה הייתם|איזה מהם|איזו מהן)"), "לענות על שאלה"),
 ]
 
 FILLER_TAGS = {"#viral", "#fyp", "#explore", "#explorepage", "#foryou", "#foryoupage",
