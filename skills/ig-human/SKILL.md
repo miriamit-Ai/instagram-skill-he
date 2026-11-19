@@ -1,122 +1,77 @@
 ---
 name: ig-human
 description: >-
-  Strip the machine fingerprint out of any draft - em dashes, AI slop words,
-  invisible watermark characters - and score it against a five-check detection
-  panel before it goes out. Use whenever text needs to sound human, when the
-  user says humanize, "does this sound like AI", "remove the em dashes",
-  "de-slop this", "this sounds like ChatGPT", or before any caption, script,
-  comment, reply or DM is shown to the user.
-  Hebrew (Miriam AI edition): להאניש טקסט ולהוריד סימנים של AI. עונה בעברית.
+  מוריד מכל טיוטה את הסימנים של מכונה, קווים מפרידים ארוכים, ביטויים שחוקים של
+  AI בעברית ובאנגלית, ותווים נסתרים, ונותן לה ציון לפי חמש בדיקות לפני שהיא יוצאת.
+  להפעיל בכל פעם שטקסט צריך להישמע אנושי, כשמבקשים "תאניש", "זה נשמע כמו AI?",
+  "תוריד את הקווים", "זה נשמע כמו צ'אט GPT", או לפני שמראים למשתמשת כל כיתוב,
+  תסריט, תגובה, תשובה או הודעה. Hebrew edition by Miriam AI: humanizer.
 ---
 
-# ig-human
+# ig-human (גרסה עברית של Miriam AI)
 
-> **גרסה עברית של Miriam AI.** הסקיל הזה עובד בעברית כברירת מחדל:
-> - כל מה שמוצג למשתמשת ונכתב בשבילה, בעברית מדוברת וטבעית, לא עברית של מסמך.
-> - פנייה ברבים (אתם) כברירת מחדל, אלא אם `~/.claude/instagram/voice.md` אומר אחרת. לא מערבבים מגדרים באותו טקסט.
-> - כותבים "פרומפט", "סקיל", "ריל" ו"רילס" כמו שאומרים אותם.
-> - בלי הסימן — (קו מפריד ארוך). זה סימן מובהק לטקסט של AI.
-> - מספרים עם ₪ כשמדובר בכסף בישראל. בודקים שמספרים ומילים באנגלית בתוך משפט עברי מוצגים בסדר הנכון.
-> - שמות הפקודות, הקבצים והכלים (כמו `/ig-reel` או `swipe.py`) נשארים באנגלית.
-> - נוסחאות הפתיח בעברית נמצאות ב-`ig-reel/hooks_he.json`. הכלים ב-Python מזהים עברית לבד.
-> - אם המשתמשת כותבת באנגלית, עונים באנגלית לפי ההוראות למטה.
-
-Two tools live in this folder and they both actually run. Use them. Do not
-eyeball this.
+בתיקייה יש שני כלים, ושניהם באמת רצים. משתמשים בהם. לא מעריכים את זה בעין.
 
 ```bash
-python3 humanize.py draft.txt --report        # clean it, show what changed
-python3 detect.py draft.txt                    # score it, five checks
-python3 detect.py before.txt after.txt         # prove the delta
+python3 humanize.py draft.txt --report        # מנקה ומראה מה השתנה
+python3 detect.py draft.txt                    # ציון, חמש בדיקות
+python3 detect.py before.txt after.txt         # מוכיחים את ההפרש
 ```
 
-Both read `slop.json`: 154 stock words and phrases with plain-English
-replacements, 18 invisible character classes, 11 typographic substitutions and
-16 structural tells. The last block of each list is Instagram-specific, the
-vocabulary that only shows up in captions and voiceovers. It is meant to be
-edited. If the user has a word they always use that the lexicon strips, take it
-out of the file.
+שניהם קוראים את `slop.json`: 182 מילים וביטויים שחוקים עם תחליפים פשוטים, מתוכם 28 בעברית (כמו "בעולם של היום", "חשוב לציין ש", "מהפכני", "פורץ דרך"), 18 סוגים של תווים נסתרים, 11 החלפות טיפוגרפיות ו-22 מבנים מסגירים, מתוכם 6 בעברית. הקובץ נועד לעריכה. אם למשתמשת יש מילה שהיא תמיד משתמשת בה והרשימה מוחקת אותה, מוציאים אותה מהקובץ.
 
-## Why this matters more on Instagram than it looks
+## למה זה חשוב באינסטגרם יותר ממה שזה נראה
 
-Captions are short and scripts get said out loud. A written-sounding line in a
-600-character caption is a larger share of the text than the same line in an
-essay, and a voiceover that nobody could say naturally is obvious in the first
-take. The tell here is not a detector flagging the post. The tell is a person
-scrolling past something that reads like a brand, or a creator stumbling over
-their own script.
+כיתובים קצרים ותסריטים נאמרים בקול. משפט שנשמע כתוב בכיתוב של 600 תווים הוא חלק גדול יותר מהטקסט מאשר אותו משפט במאמר, וקריינות שאף אחד לא יכול להגיד בטבעיות בולטת כבר בטייק הראשון. הסימן כאן הוא לא גלאי שמסמן את הפוסט. הסימן הוא אדם שגולל הלאה כי זה נשמע כמו מותג, או יוצרת שמועדת על התסריט של עצמה.
 
-## What gets fixed automatically
+## מה מתוקן אוטומטית
 
-**1. Invisible characters.** Zero-width spaces and joiners, word joiners, soft
-hyphens, byte-order marks, Unicode tag characters, invisible separators,
-non-breaking and narrow spaces. A keyboard does not produce these. They survive
-copy-paste, they are invisible in every editor, and they are the most
-mechanical thing in generated text. `humanize.py` deletes every one, including
-any remaining Unicode format character it does not have a name for.
+**1. תווים נסתרים.** רווחים ומחברים ברוחב אפס, מחברי מילים, מקפים רכים, סימני סדר בתים, תווי תג של יוניקוד, מפרידים בלתי נראים, רווחים לא שבירים וצרים. מקלדת לא מייצרת אותם. הם שורדים העתק הדבק, הם בלתי נראים בכל עורך, והם הדבר הכי מכני בטקסט שנוצר. `humanize.py` מוחק כל אחד מהם.
 
-**2. Typography.** Em dash to comma, en dash to hyphen, curly quotes to
-straight, ellipsis to three dots, bullet character to hyphen. The em dash pass
-is the one that matters: it collapses the dash to a comma and then cleans up
-the double punctuation and orphaned periods that leaves behind.
+**2. טיפוגרפיה.** קו מפריד ארוך (—) הופך לפסיק, קו בינוני למקף, מירכאות מעוקלות לישרות, שלוש נקודות כתו אחד לשלוש נקודות, תבליט למקף. החשוב מכולם הוא הקו הארוך: הוא הופך לפסיק, ואחר כך הכלי מנקה את הפיסוק הכפול שנשאר.
 
-**3. The slop lexicon.** delve, leverage, robust, seamless, crucial, testament
-to, "in today's fast-paced world", plus the Instagram block: "stop scrolling",
-"in today's video", "follow for more", "tag someone who needs this", "the
-algorithm loves", "run don't walk". Each swapped for a plain word or deleted,
-with capitalisation preserved and URLs left untouched.
+**3. רשימת הביטויים השחוקים.** בעברית: "בעולם של היום", "בעידן הדיגיטלי", "חשוב לציין ש", "ראוי לציין ש", "בואו נצלול", "אין ספק ש", "לסיכום", "יתרה מזאת", "מהפכני", "פורץ דרך", "משנה את כללי המשחק", "למנף". באנגלית: delve, leverage, robust, seamless, ועוד בלוק של אינסטגרם: "stop scrolling", "in today's video", "follow for more". כל אחד מוחלף במילה פשוטה או נמחק, וקישורים לא נוגעים בהם.
 
-## What does NOT get fixed automatically
+## מה לא מתוקן אוטומטית
 
-Structural tells get **flagged, not rewritten**, because changing the shape of
-a sentence needs judgement:
+מבנים מסגירים **מסומנים, לא משוכתבים**, כי לשנות את הצורה של משפט דורש שיקול דעת:
 
-- "It's not just X, it's Y" and "not only X but also Y"
-- Rule-of-three triads
-- Rhetorical one-word question lines: "The result?"
-- The video preamble: "in this video I'm going to show you"
-- Emoji bullet lists
-- Three or more shouted words in a row
-- Hashtag walls
-- Reflex bait: "follow for more", "tag someone who", "double tap if"
+- "זה לא רק X, זה Y" ו"לא רק X אלא גם Y" (וגם הגרסאות באנגלית)
+- "זה לא על X. זה על Y."
+- שלישיות של שלושה תארים או שלושה פריטים
+- שאלה רטורית של מילה אחת בשורה: "התוצאה?"
+- הקדמה לסרטון: "בסרטון הזה אני הולכת להראות לכם"
+- רשימות עם אימוג'י כתבליט
+- שלוש מילים או יותר באותיות גדולות ברצף
+- קיר של האשטגים
+- פיתיונות: "תעקבו לעוד", "תייגו מישהו ש", "לייק אם"
 
-That list is your job. Rewrite each flagged line by hand, keeping the meaning,
-then re-run `detect.py`. This is the part that moves the score from REVIEW to
-PASS, and it is the part a script cannot do.
+הרשימה הזאת היא העבודה שלכם. משכתבים כל שורה מסומנת ביד, שומרים על המשמעות, ומריצים שוב את `detect.py`. זה החלק שמעביר את הציון מ-REVIEW ל-PASS, וזה החלק שכלי לא יכול לעשות.
 
-## The five checks
+## חמש הבדיקות
 
-`detect.py` scores five signals 0-100, higher is more human:
+`detect.py` נותן ציון 0 עד 100 לחמישה סימנים, ויותר גבוה זה יותר אנושי. הכלי מזהה אותיות עבריות, כינויי גוף בעברית ו-₪:
 
-| check | what it measures | machine looks like |
+| בדיקה | מה היא מודדת | איך מכונה נראית |
 | --- | --- | --- |
-| BURSTINESS | sentence-length variation | every sentence the same length |
-| SPECIFICITY | numbers, names, concrete markers per 100 words | abstract nouns, no figures |
-| SLOP DENSITY | lexicon hits per 100 words | stock vocabulary |
-| FINGERPRINT | invisible chars, em dashes, curly quotes per 1k chars | typographically perfect |
-| VOICE | contractions, person, structural tells | no contractions, staged reveals |
+| BURSTINESS | שונות באורך המשפטים | כל המשפטים באותו אורך |
+| SPECIFICITY | מספרים, שמות, פרטים מוחשיים ל-100 מילים | שמות עצם מופשטים, בלי נתונים |
+| SLOP DENSITY | ביטויים שחוקים ל-100 מילים | אוצר מילים שחוק |
+| FINGERPRINT | תווים נסתרים, קווים ארוכים, מירכאות מעוקלות ל-1,000 תווים | טיפוגרפיה מושלמת מדי |
+| VOICE | גוף ופנייה, מבנים מסגירים | בלי פנייה, גילויים מבוימים |
 
-The verdict weights the mean at 60% and the **weakest single check** at 40%,
-because one signal is enough. PASS needs an overall of 70+ with no check
-below 55.
+הציון הסופי שוקל את הממוצע ב-60% ואת **הבדיקה החלשה ביותר** ב-40%, כי סימן אחד מספיק. PASS דורש ציון כולל של 70 ומעלה ושום בדיקה מתחת ל-55.
 
-## Say this honestly
+בעברית אין קיצורים כמו באנגלית (don't, it's), אז בדיקת VOICE נשענת יותר על פנייה ועל כינויי גוף. טקסט עברי קצר מאוד יקבל לפעמים "קצר מדי בשביל לשפוט", וזה בסדר.
 
-These are five local heuristics modelled on the signals public detectors key
-on. They run entirely on the user's machine and nothing is uploaded. They are
-**not** GPTZero, Originality, Copyleaks, Winston or Turnitin, they do not call
-those APIs, and they cannot promise those verdicts. Fixing what they measure
-does tend to move those numbers, because they are measuring the same underlying
-things. That is the claim. Do not make a bigger one on the user's behalf, and
-do not tell a user their text is undetectable.
+## אומרים את זה בכנות
 
-## Order of operations
+אלה חמש בדיקות מקומיות שבנויות על הסימנים שגלאים פומביים מסתכלים עליהם. הן רצות כולן על המחשב של המשתמשת ושום דבר לא עולה לשום מקום. הן **לא** GPTZero, Originality, Copyleaks, Winston או Turnitin, הן לא פונות לממשקים שלהם, והן לא יכולות להבטיח את התוצאות שלהם. לתקן את מה שהן מודדות נוטה להזיז גם את המספרים האלה, כי הן מודדות את אותם דברים בבסיס. זו הטענה. לא טוענים טענה גדולה יותר בשם המשתמשת, ולא אומרים לה שהטקסט שלה בלתי ניתן לזיהוי.
+
+## סדר הפעולות
 
 1. `humanize.py draft.txt -o clean.txt --report`
-2. Read the structural flags. Rewrite those lines yourself.
-3. `detect.py draft.txt clean.txt` to show the before and after.
-4. If the verdict is not PASS, fix the weakest check named in the output and go
-   again. Two rounds is normal. Five means the draft was written by formula,
-   and the fix is a different draft, not more passes.
-5. Show the user the cleaned text and the score. Never the score alone.
+2. קוראים את המבנים המסומנים. משכתבים את השורות האלה בעצמכם.
+3. `detect.py draft.txt clean.txt` כדי להראות לפני ואחרי.
+4. אם הציון לא PASS, מתקנים את הבדיקה החלשה שמופיעה בפלט ומריצים שוב. שני סבבים זה נורמלי. חמישה אומרים שהטיוטה נכתבה לפי נוסחה, והתיקון הוא טיוטה אחרת, לא עוד סבבים.
+5. מראים למשתמשת את הטקסט הנקי ואת הציון. אף פעם לא רק את הציון.
