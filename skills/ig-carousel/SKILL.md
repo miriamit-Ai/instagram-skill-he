@@ -1,114 +1,80 @@
 ---
 name: ig-carousel
 description: >-
-  Build an Instagram carousel - the cover that earns the swipe, slide-by-slide
-  copy, and the 1080x1350 files to upload. Use when the user says "carousel",
-  "slides", "swipe post", "turn this into a carousel", or has a list-shaped or
-  step-shaped idea that would die as a single image.
-  Hebrew (Miriam AI edition): קרוסלה. עונה בעברית.
+  בונה קרוסלה לאינסטגרם: השער שגורם להחליק, הטקסט לכל שקופית, והקבצים בגודל
+  1080x1350 להעלאה. להפעיל כשמבקשים "קרוסלה", "שקופיות", "פוסט להחלקה", "תהפוך את
+  זה לקרוסלה", או כשיש רעיון בצורת רשימה או שלבים שימות כתמונה בודדת. Hebrew
+  edition by Miriam AI: carousel builder.
 ---
 
-# ig-carousel
+# ig-carousel (גרסה עברית של Miriam AI)
 
-> **גרסה עברית של Miriam AI.** הסקיל הזה עובד בעברית כברירת מחדל:
-> - כל מה שמוצג למשתמשת ונכתב בשבילה, בעברית מדוברת וטבעית, לא עברית של מסמך.
-> - פנייה ברבים (אתם) כברירת מחדל, אלא אם `~/.claude/instagram/voice.md` אומר אחרת. לא מערבבים מגדרים באותו טקסט.
-> - כותבים "פרומפט", "סקיל", "ריל" ו"רילס" כמו שאומרים אותם.
-> - בלי הסימן — (קו מפריד ארוך). זה סימן מובהק לטקסט של AI.
-> - מספרים עם ₪ כשמדובר בכסף בישראל. בודקים שמספרים ומילים באנגלית בתוך משפט עברי מוצגים בסדר הנכון.
-> - שמות הפקודות, הקבצים והכלים (כמו `/ig-reel` או `swipe.py`) נשארים באנגלית.
-> - נוסחאות הפתיח בעברית נמצאות ב-`ig-reel/hooks_he.json`. הכלים ב-Python מזהים עברית לבד.
-> - אם המשתמשת כותבת באנגלית, עונים באנגלית לפי ההוראות למטה.
+קרוסלות הן הפורמט עם זמן השהייה הכי ארוך בתשבץ, כי החלקה היא פעולה וגלילה לא. יש להן גם הזדמנות שנייה: אינסטגרם יכול להראות קרוסלה שוב, משקופית מאוחרת יותר, למי שלא הגיב בפעם הראשונה. לכן גם השקופית השנייה צריכה לעמוד בפני עצמה.
 
-Carousels are the highest-dwell format on the grid, because a swipe is an
-interaction and a scroll is not. They also get a second chance: Instagram can
-show a carousel again starting from a later slide to someone who did not engage
-the first time, so slide two has to stand on its own as well.
+הפורמט מתגמל רעיון אחד שמפורק לשלבים. הוא מעניש כיתוב שחתכו לחתיכות.
 
-The format rewards one idea broken into steps. It punishes a caption cut into
-pieces.
+## מתי זה עדיף על ריל
 
-## When to use it instead of a Reel
+קרוסלה מתאימה כשלרעיון יש **סדר וצריך לקרוא אותו שוב**: שלבים, שיטה עם חלקים, לפני ואחרי, רשימה ששווה צילום מסך. ריל מתאים כשלרעיון יש תנועה, פנים, או תמורה שצריך לראות קורית.
 
-Use a carousel when the idea has **sequence and needs to be re-read**: steps, a
-framework with parts, a before and after, a list worth screenshotting. Use a
-Reel when the idea has motion, a face, or a payoff that has to be seen
-happening.
+אם הרעיון הוא טענה אחת, הוא לא זה ולא זה. מעבירים אותו ל-`/ig-reel` ואומרים את זה.
 
-If the idea is one claim, it is neither. Hand it to `/ig-reel` and say so.
+## מבנה
 
-## Structure
-
-6 to 10 slides. The cap is 20 and 20 is almost always a book nobody finishes.
-Under 5 and the swipe never starts.
+6 עד 10 שקופיות. המקסימום הוא 20, ו-20 זה כמעט תמיד ספר שאף אחד לא מסיים. פחות מ-5 וההחלקה לא מתחילה.
 
 ```
-1         COVER     the hook. 6 words or fewer, at a size that is legible in
-                    the grid at thumbnail. One line of promise under it.
-2         THE STAKE why this matters, in one sentence. This slide is also a
-                    second cover, so it cannot be setup.
-3 to N    ONE IDEA PER SLIDE. A headline of 3 to 7 words, at most 25 words
-                    under it. If a slide needs a paragraph, it is two slides.
-N+1       RECAP     the whole thing as a list. This is the screenshot slide.
-LAST      CTA       one action. Save, comment a keyword, or follow. One.
+1         שער       הפתיח. עד 6 מילים, בגודל שקריא בתשבץ בתמונה ממוזערת.
+                    שורת הבטחה אחת מתחת.
+2         מה על הכף למה זה חשוב, במשפט אחד. השקופית הזאת היא גם שער שני,
+                    אז היא לא יכולה להיות הקדמה.
+3 עד N    רעיון אחד בכל שקופית. כותרת של 3 עד 7 מילים, עד 25 מילים מתחת.
+                    אם שקופית צריכה פסקה, אלה שתי שקופיות.
+N+1       סיכום     הכול כרשימה. זו השקופית שמצלמים מסך.
+אחרונה    בקשה      פעולה אחת. לשמור, להגיב מילת מפתח, או לעקוב. אחת.
 ```
 
-## Slide copy rules
+## כללים לטקסט
 
-- **The cover is 80% of the result.** Six words. Big. Nothing on the deck saves
-  a cover nobody swipes.
-- **Design for the grid crop.** The profile grid crops to a portrait rectangle
-  that is taller than it is wide, and the exact ratio has moved more than once.
-  Build at 1080x1350 and keep the cover text well inside the middle, clear of
-  the outer 120 pixels on every side, and the crop stops mattering.
-- **Number the slides** (3/8). Completion goes up when people can see the end.
-- **No slide is a paragraph.** If it cannot be said in 25 words, split it.
-- **The recap slide is the one people screenshot and send.** Sends are the
-  strongest signal you can earn. Make it standalone and readable with no
-  context.
-- **The handle on every slide**, small, bottom corner. Screenshots travel
-  without you.
-- **Alt text on the cover at minimum.** It is read by screen readers and by
-  Instagram.
+- **השער הוא 80% מהתוצאה.** שש מילים. גדול. שום דבר בהמשך לא מציל שער שאף אחד לא מחליק ממנו.
+- **מעצבים לחיתוך של התשבץ.** התשבץ בפרופיל חותך למלבן לאורך, והיחס המדויק השתנה יותר מפעם אחת. בונים ב-1080x1350 ושומרים את טקסט השער באמצע, הרחק מ-120 הפיקסלים החיצוניים בכל צד, ואז החיתוך לא משנה.
+- **ממספרים את השקופיות** (3/8). יותר אנשים מסיימים כשהם רואים את הסוף.
+- **אף שקופית היא לא פסקה.** אם אי אפשר להגיד את זה ב-25 מילים, מפצלים.
+- **שקופית הסיכום היא זו שמצלמים ושולחים.** שליחות הן הסימן הכי חזק שאפשר להרוויח. עושים אותה עצמאית וקריאה בלי הקשר.
+- **שם המשתמש בכל שקופית**, קטן, בפינה התחתונה. צילומי מסך מסתובבים בלעדיכם.
+- **טקסט חלופי לפחות לשער.** קוראי מסך קוראים אותו, וגם אינסטגרם.
+- **עברית מימין לשמאל.** בקרוסלה עברית סדר השקופיות נשאר משמאל לימין (כך אינסטגרם מחליק), אבל כל הטקסט בתוך השקופית מיושר לימין. בודקים שמספרים, ₪ ומילים באנגלית מופיעים בסדר הנכון.
 
-## Building the files
+## בניית הקבצים
 
-Instagram wants 1080x1350 (4:5), JPEG or PNG, up to 20 items. Build it as HTML
-and print each slide:
+אינסטגרם רוצה 1080x1350 (4:5), JPEG או PNG, עד 20 פריטים. בונים את זה כ-HTML ומדפיסים כל שקופית:
 
 ```bash
-# one <section> per slide, 1080x1350, page-break-after: always
-# then Chrome headless --print-to-pdf, or any HTML-to-image you already use
+# <section> אחד לכל שקופית, 1080x1350, page-break-after: always
+# ואז Chrome headless --print-to-pdf, או כל כלי HTML לתמונה שכבר משתמשים בו
 ```
 
-Write the HTML with `width:1080px; height:1350px`, a single accent colour, and
-type no smaller than 32px, because this is read on a phone at a third of its
-real size. If the project has a brand skill or a design system, use it and do
-not invent a palette.
+כותבים את ה-HTML עם `width:1080px; height:1350px`, `dir="rtl"` ו-`lang="he"`, צבע הדגשה אחד, ופונט לא קטן מ-32px, כי קוראים את זה בטלפון בשליש מהגודל האמיתי. פונט עברי שקריא בגודל קטן, כמו Heebo או Assistant. אם יש בפרויקט סקיל מותג או מערכת עיצוב, משתמשים בהם ולא ממציאים פלטה.
 
-## Output
+## פלט
 
-The slide-by-slide copy first, as a numbered list the user can read in ten
-seconds and edit before anything is rendered. Then the **caption**, which for a
-carousel is Job B in `/ig-caption`: the caption is doing work here, because the
-cover has already used its six words.
+קודם הטקסט לכל שקופית, כרשימה ממוספרת שהמשתמשת יכולה לקרוא בעשר שניות ולערוך לפני שמשהו מרונדר. אחר כך **הכיתוב**, שבקרוסלה הוא תפקיד B ב-`/ig-caption`: כאן הכיתוב עושה עבודה, כי השער כבר השתמש בשש המילים שלו.
 
-Run both through `/ig-human`. Build the files only after the user approves the
-copy.
+מעבירים את שניהם דרך `/ig-human`. בונים את הקבצים רק אחרי שהמשתמשת מאשרת את הטקסט.
 
 ```
-CAROUSEL  ·  8 slides
+קרוסלה  ·  8 שקופיות
 
-1  COVER   THE $18,000 CLAUSE
-           One line I now put in every contract.
-2  STAKE   I approved the work. They asked for the money back nine days later.
-3          WHAT IT SAYS
-           Payment on delivery, not on approval.
+1  שער     הסעיף של 12,000 ₪
+           שורה אחת שאני מכניסה היום לכל חוזה.
+2  על הכף  אישרתי את העבודה. תשעה ימים אחר כך ביקשו את הכסף בחזרה.
+3          מה כתוב בו
+           תשלום עם המסירה, לא עם האישור.
 ...
-7  RECAP   All four lines, in order.
-8  CTA     Comment CONTRACT and I will send the full clause.
+7  סיכום   כל ארבע השורות, לפי הסדר.
+8  בקשה    תגיבו חוזה ואשלח לכם את הסעיף המלא.
 
-Caption: Job B, hook in line 1, one ask, 3 tags.
+כיתוב: תפקיד B, פתיח בשורה 1, בקשה אחת, 3 האשטגים.
 ```
 
-Nothing is uploaded. The user posts it.
+שום דבר לא עולה לאינסטגרם. המשתמשת מפרסמת בעצמה.

@@ -1,105 +1,72 @@
 ---
 name: ig-comment
 description: >-
-  Write comments on other people's Instagram posts and reels that read as a
-  person with an opinion, not a bot. Use when the user pastes a post or a reel
-  and wants a comment, says "comment on this", "engage with this", "what do I
-  say here", or wants a batch for their daily engagement round.
-  Hebrew (Miriam AI edition): תגובות לפוסטים של אחרים. עונה בעברית.
+  כותב תגובות לפוסטים ולרילס של אחרים באינסטגרם, שנשמעות כמו בן אדם עם דעה ולא
+  כמו בוט. להפעיל כשמדביקים פוסט או ריל ומבקשים תגובה, "תגיב על זה", "מה לכתוב
+  פה", או כשרוצים סבב תגובות לסבב המעורבות היומי. Hebrew edition by Miriam AI:
+  comments on other people's posts.
 ---
 
-# ig-comment
+# ig-comment (גרסה עברית של Miriam AI)
 
-> **גרסה עברית של Miriam AI.** הסקיל הזה עובד בעברית כברירת מחדל:
-> - כל מה שמוצג למשתמשת ונכתב בשבילה, בעברית מדוברת וטבעית, לא עברית של מסמך.
-> - פנייה ברבים (אתם) כברירת מחדל, אלא אם `~/.claude/instagram/voice.md` אומר אחרת. לא מערבבים מגדרים באותו טקסט.
-> - כותבים "פרומפט", "סקיל", "ריל" ו"רילס" כמו שאומרים אותם.
-> - בלי הסימן — (קו מפריד ארוך). זה סימן מובהק לטקסט של AI.
-> - מספרים עם ₪ כשמדובר בכסף בישראל. בודקים שמספרים ומילים באנגלית בתוך משפט עברי מוצגים בסדר הנכון.
-> - שמות הפקודות, הקבצים והכלים (כמו `/ig-reel` או `swipe.py`) נשארים באנגלית.
-> - נוסחאות הפתיח בעברית נמצאות ב-`ig-reel/hooks_he.json`. הכלים ב-Python מזהים עברית לבד.
-> - אם המשתמשת כותבת באנגלית, עונים באנגלית לפי ההוראות למטה.
+תגובות הן עשרים הדקות עם ההשפעה הכי גדולה באינסטגרם, והכי קל לעשות אותן רע. תגובה בראש ריל עם 40 אלף צפיות נראית על ידי יותר אנשים מרוב הפוסטים של רוב החשבונות, וזה המקום היחיד שבו זר יכול ללחוץ ישר לפרופיל.
 
-Commenting is the highest-leverage twenty minutes on Instagram and the easiest
-to do badly. A comment near the top of a reel with 40,000 views is seen by more
-people than most accounts' own posts, and it is the one place where a stranger
-can tap straight through to a profile.
+תגובה כללית גרועה יותר מכלום. היא עולה נגיעה שלא מובילה לשום מקום, והיא מסמנת את החשבון כחשבון של קבוצת מעורבות בעיני האדם היחיד שהדעה שלו חשובה, היוצר.
 
-A generic comment is worse than none. It costs a tap that goes nowhere and it
-marks the account as an engagement-pod account to the one person whose opinion
-mattered, which is the creator.
+## קלט
 
-## Input
+המשתמשת מדביקה את הטקסט של הפוסט או הריל, או צילום מסך, עם שם החשבון. אם יש רק קישור שאי אפשר לפתוח, מבקשים שתדביק. לא משתמשים בדפדפן כדי לגרוף את הפיד ולא מפרסמים כלום.
 
-The user pastes the post or reel text, or a screenshot, with the account name.
-If they give a URL you cannot open, ask them to paste it. Do not use a browser
-tool to scrape the feed and do not post anything.
+## תשעה סוגי תגובות
 
-## The nine comment types
+בוחרים לפי מה שהפוסט באמת. אף פעם לא ברירת מחדל לסוג 1.
 
-Pick by what the post actually is. Never default to type 1.
-
-| # | type | when | shape |
+| # | סוג | מתי | צורה |
 | --- | --- | --- | --- |
-| 1 | **Add a datum** | the post makes a claim you can support with a number | "Same for us: 40% of..." |
-| 2 | **Add the missing case** | the post is right but incomplete | "This holds until {condition}." |
-| 3 | **Respectful disagree** | you genuinely think it is wrong | name the agreement first, then the fork |
-| 4 | **Extend one line** | one line in it is the good one | quote it, build on it |
-| 5 | **Ask the real question** | the post skipped the hard part | one question, specific |
-| 6 | **The receipt** | you have done the thing they described | what happened, two sentences |
-| 7 | **The correction** | there is a factual error | be right, be brief, be kind, be sure |
-| 8 | **The reframe** | right facts, wrong frame | "Another way to read this:" |
-| 9 | **The one-liner** | the post needs nothing, you want presence | under 10 words, must be funny or true |
+| 1 | **להוסיף נתון** | הפוסט טוען משהו שאפשר לחזק במספר | "אצלנו אותו דבר: 40% מ..." |
+| 2 | **להוסיף את המקרה שחסר** | הפוסט צודק אבל לא שלם | "זה נכון עד ש{תנאי}." |
+| 3 | **מחלוקת מכבדת** | באמת חושבים שזה לא נכון | קודם מה מסכימים, ואז איפה נפרדים |
+| 4 | **להרחיב שורה אחת** | יש בו שורה אחת טובה | לצטט אותה ולבנות עליה |
+| 5 | **לשאול את השאלה האמיתית** | הפוסט דילג על החלק הקשה | שאלה אחת, ספציפית |
+| 6 | **הקבלה** | עשיתם בדיוק את מה שהוא תיאר | מה קרה, שני משפטים |
+| 7 | **התיקון** | יש טעות עובדתית | לצדוק, לקצר, להיות נחמדים, להיות בטוחים |
+| 8 | **מסגור אחר** | העובדות נכונות, המסגור לא | "אפשר לקרוא את זה גם ככה:" |
+| 9 | **משפט אחד** | הפוסט לא צריך כלום, רוצים נוכחות | פחות מ-10 מילים, מצחיק או נכון |
 
-## Rules
+## כללים
 
-- **One to three sentences.** Instagram comments are read in a narrow column
-  under a video. A paragraph gets collapsed behind "more" and nobody taps it.
-- **Never open with** "Great post", "Love this", "So true", "This 👏", "Needed
-  this today", or the creator's first name with an exclamation mark. All of
-  them are invisible.
-- **No emoji-only comments** and no emoji as the first character.
-- **Never restate the reel.** Everybody watching just watched it.
-- **One idea.** A comment with two points reads as a hijack.
-- **Say the specific thing.** If the comment could sit under any post on the
-  topic, it is not a comment, it is noise.
-- **No pitching, ever.** Not the offer, not the link, not "check out my page".
-  That is the fastest way to be blocked by exactly the person you were trying
-  to reach.
-- **Early matters more here than anywhere.** A comment in the first hour on a
-  reel that then travels gets carried with it.
+- **משפט עד שלושה.** תגובות באינסטגרם נקראות בעמודה צרה מתחת לסרטון. פסקה מתקפלת מאחורי "עוד" ואף אחד לא לוחץ.
+- **אף פעם לא פותחים ב** "פוסט מעולה", "אהבתי", "כל כך נכון", "זה 👏", "הייתי צריכה את זה היום", או בשם של היוצר עם סימן קריאה. כולם בלתי נראים.
+- **בלי תגובות של אימוג'י בלבד** ובלי אימוג'י כתו ראשון.
+- **לא חוזרים על הריל.** כל מי שצופה הרגע ראה אותו.
+- **רעיון אחד.** תגובה עם שתי נקודות נקראת כמו השתלטות.
+- **אומרים את הדבר הספציפי.** אם התגובה יכולה לשבת מתחת לכל פוסט בנושא, היא לא תגובה, היא רעש.
+- **אף פעם לא מוכרים.** לא את ההצעה, לא קישור, לא "תציצו בעמוד שלי". זו הדרך הכי מהירה להיחסם בדיוק על ידי מי שרציתם להגיע אליו.
+- **מוקדם חשוב כאן יותר מבכל מקום.** תגובה בשעה הראשונה על ריל שאחר כך מתפוצץ נסחבת איתו.
+- **בעברית:** שפה מדוברת, בלי הסימן —, ובלי ניסוחים של AI ("חשוב לציין", "תובנה מעניינת"). אם הפוסט באנגלית, שואלים אם להגיב באנגלית.
 
-## Output
+## פלט
 
-Give **two options of different types**, labelled, plus one line on which you
-would post and why. Run both through `/ig-human` first: comments are short, so
-an em dash or a stock phrase is proportionally louder than it is in a caption.
+נותנים **שתי אפשרויות מסוגים שונים**, עם תווית, ועוד שורה אחת על איזו הייתם מפרסמים ולמה. קודם מעבירים את שתיהן דרך `/ig-human`: תגובות קצרות, אז קו מפריד או ביטוי שחוק בולטים בהן יחסית יותר מבכיתוב.
 
 ```
-COMMENT OPTIONS  (on @acct's reel about pricing)
+אפשרויות לתגובה  (על הריל של @acct על תמחור)
 
-[6 · Receipt]
-We raised ours 40% last March and lost exactly one client, who was the one
-taking up half the inbox. Took eight months to stop being scared of it.
+[6 · קבלה]
+העלינו מחירים ב-40% במרץ ואיבדנו בדיוק לקוח אחד, זה שתפס חצי מתיבת הדואר.
+לקח לנו שמונה חודשים להפסיק לפחד מזה.
 
-[3 · Respectful disagree]
-Agree on the anchoring. The part I would push back on is doing it mid-project.
-We tried that and it cost us a renewal that was otherwise fine.
+[3 · מחלוקת מכבדת]
+מסכימה לגבי העוגן. איפה שהייתי מתווכחת זה לעשות את זה באמצע פרויקט.
+ניסינו, וזה עלה לנו בחידוש שהיה בסדר גמור.
 
-Post the first. It concedes something and it has a number in it.
+הייתי מפרסמת את הראשונה. היא מודה במשהו ויש בה מספר.
 ```
 
-## Batch mode
+## מצב סבב
 
-For an engagement round, ask for the 5 to 10 posts as pasted text in one
-message, return one comment each in a single block, and keep a running note in
-`~/.claude/instagram/log.md` of who has been commented on this week.
-Commenting on the same three accounts every day is visible and it looks like
-exactly what it is.
+לסבב מעורבות, מבקשים את 5 עד 10 הפוסטים כטקסט מודבק בהודעה אחת, מחזירים תגובה אחת לכל אחד בבלוק אחד, ומנהלים רשימה ב-`~/.claude/instagram/log.md` של מי קיבל תגובה השבוע. להגיב לאותם שלושה חשבונות כל יום רואים, וזה נראה בדיוק כמו מה שזה.
 
-## Never
+## אף פעם
 
-Do not auto-post, do not automate comments, and do not use a browser tool to
-publish on the user's behalf. Automated engagement violates Instagram's Terms
-of Use and gets accounts action-blocked. This skill writes the comment. The
-user posts it.
+לא מפרסמים אוטומטית, לא הופכים תגובות לאוטומציה, ולא משתמשים בדפדפן כדי לפרסם בשם המשתמשת. מעורבות אוטומטית מפרה את תנאי השימוש של אינסטגרם וגורמת לחסימת פעולות. הסקיל הזה כותב את התגובה. המשתמשת מפרסמת.

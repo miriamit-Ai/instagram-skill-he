@@ -1,108 +1,74 @@
 ---
 name: ig-story
 description: >-
-  Write the day's Instagram Stories - the frame-by-frame sequence, which
-  stickers to use where, and the one that moves people into the DMs. Use when
-  the user says "stories", "what do I post on my story", "story sequence",
-  "poll idea", "I have nothing to story about", or wants to sell something
-  without making a post about it.
-  Hebrew (Miriam AI edition): סטוריז. עונה בעברית.
+  כותב את הסטוריז של היום: רצף הפריימים, איזה סטיקר איפה, ואיזה פריים מעביר
+  אנשים להודעות. להפעיל כשמבקשים "סטוריז", "מה להעלות לסטורי", "רצף סטוריז",
+  "רעיון לסקר", "אין לי מה להעלות לסטורי", או כשרוצים למכור משהו בלי לעשות עליו
+  פוסט. Hebrew edition by Miriam AI: daily stories sequence.
 ---
 
-# ig-story
+# ig-story (גרסה עברית של Miriam AI)
 
-> **גרסה עברית של Miriam AI.** הסקיל הזה עובד בעברית כברירת מחדל:
-> - כל מה שמוצג למשתמשת ונכתב בשבילה, בעברית מדוברת וטבעית, לא עברית של מסמך.
-> - פנייה ברבים (אתם) כברירת מחדל, אלא אם `~/.claude/instagram/voice.md` אומר אחרת. לא מערבבים מגדרים באותו טקסט.
-> - כותבים "פרומפט", "סקיל", "ריל" ו"רילס" כמו שאומרים אותם.
-> - בלי הסימן — (קו מפריד ארוך). זה סימן מובהק לטקסט של AI.
-> - מספרים עם ₪ כשמדובר בכסף בישראל. בודקים שמספרים ומילים באנגלית בתוך משפט עברי מוצגים בסדר הנכון.
-> - שמות הפקודות, הקבצים והכלים (כמו `/ig-reel` או `swipe.py`) נשארים באנגלית.
-> - נוסחאות הפתיח בעברית נמצאות ב-`ig-reel/hooks_he.json`. הכלים ב-Python מזהים עברית לבד.
-> - אם המשתמשת כותבת באנגלית, עונים באנגלית לפי ההוראות למטה.
+סטוריז הם לא פיד קטן יותר. הפיד הוא איך זרים מוצאים אתכם. הסטוריז הם איך מי שכבר עוקב מחליט אם אתם מישהו ששווה לקנות ממנו, והם המקום היחיד באינסטגרם שבו נגיעה אחת הופכת לשיחה.
 
-Stories are not a smaller feed. The feed is how strangers find you. Stories are
-how the people who already follow you decide whether you are a person worth
-buying from, and they are the only surface on Instagram where a tap turns into
-a conversation in one move.
+אף אחד מחוץ לעוקבים לא רואה אותם, אז התפקיד שונה לגמרי: עומק, לא חשיפה.
 
-Nobody outside your followers sees these, so the job is completely different:
-depth, not reach.
+## המבנה היומי
 
-## The daily shape
-
-Three to seven frames a day. Beyond about seven, the tap-forward rate climbs
-and the last frames play to nobody, which is exactly where people put the ask.
+שלושה עד שבעה פריימים ביום. אחרי בערך שבעה, יותר אנשים מדלגים קדימה, והפריימים האחרונים מוצגים לאף אחד. ובדיוק שם אנשים שמים את הבקשה.
 
 ```
-1       THE OPEN     something happening today, with a face or a hand in it.
-2-3     THE MIDDLE   the actual content: the process, the result, the mistake.
-4       THE ASK      one sticker. Poll, question box, quiz or link.
-5       THE CLOSE    the answer, the outcome, or tomorrow's setup.
+1       הפתיחה    משהו שקורה היום, עם פנים או יד בתוכו.
+2-3     האמצע     התוכן עצמו: התהליך, התוצאה, הטעות.
+4       הבקשה     סטיקר אחד. סקר, תיבת שאלות, חידון או קישור.
+5       הסגירה    התשובה, התוצאה, או ההכנה למחר.
 ```
 
-Put the ask at frame 4, not frame 7. Completion drops with every tap and the
-ask should be seen by the people who are still there.
+שמים את הבקשה בפריים 4, לא בפריים 7. בכל נגיעה פחות אנשים נשארים, והבקשה צריכה להגיע למי שעוד שם.
 
-## The stickers, and what each is actually for
+## הסטיקרים, ולמה כל אחד באמת טוב
 
-| sticker | job | use when |
+| סטיקר | התפקיד | מתי |
 | --- | --- | --- |
-| **Poll** | the cheapest tap there is | you want volume of response, not information |
-| **Question box** | harvesting the exact words people use | you need content ideas or objections, verbatim |
-| **Quiz** | teaching by letting them be wrong | there is a common misconception in the niche |
-| **Slider** | vibe check | nothing important. Fun, low value |
-| **Link** | the only clickable surface besides the bio | there is somewhere real to go |
-| **Countdown** | a deadline people can subscribe to | a launch, a live, a close date |
-| **Add yours** | reach beyond your followers, occasionally | the prompt is one anyone in the niche can answer |
+| **סקר** | הנגיעה הכי זולה שיש | רוצים הרבה תגובות, לא מידע |
+| **תיבת שאלות** | לאסוף את המילים המדויקות שאנשים משתמשים בהן | צריכים רעיונות לתוכן או התנגדויות, מילה במילה |
+| **חידון** | ללמד דרך זה שהם טועים | יש בתחום טעות נפוצה |
+| **סליידר** | בדיקת אווירה | שום דבר חשוב. כיף, ערך נמוך |
+| **קישור** | המקום הלחיץ היחיד חוץ מהביו | יש לאן ללכת באמת |
+| **ספירה לאחור** | דדליין שאפשר להירשם אליו | השקה, לייב, תאריך סגירה |
+| **תורך** | חשיפה מעבר לעוקבים, מדי פעם | השאלה היא כזו שכל אחד בתחום יכול לענות עליה |
 
-The question box is the most undervalued one in the list. Every answer is a
-caption, a Reel hook or a DM opener written in the audience's own words. Feed
-them to `/ig-reel` as formula #16.
+תיבת השאלות היא הכי לא מוערכת ברשימה. כל תשובה היא כיתוב, פתיח לריל או פתיחה להודעה, כתובים במילים של הקהל עצמו. מעבירים אותן ל-`/ig-reel` כנוסחה #16.
 
-## Rules
+## כללים
 
-- **A face or a hand in the first frame.** Text on a coloured background gets
-  tapped through, and the first frame decides whether the rest get watched.
-- **One idea per frame.** Reading a paragraph on a story is not a thing anyone
-  does.
-- **Keep text inside the middle.** On 1080x1920, nothing above y=250 or below
-  y=1600. The profile row sits on top and the reply bar sits underneath.
-- **Talk to one person.** "You" singular. Stories are the closest thing to a
-  DM that is not one.
-- **Do not repost your own feed post to stories with no comment.** It is the
-  single most ignored frame on the platform. If you are pointing at a post, say
-  what happened in the comments and why it is worth going back for.
-- **Sell on stories, not in posts.** Three frames of context, one frame of
-  offer, one frame of proof. That sequence sells more than a feed post about
-  the same thing and costs you no reach.
+- **פנים או יד בפריים הראשון.** טקסט על רקע צבעוני מקבל דילוג, והפריים הראשון מחליט אם יצפו בשאר.
+- **רעיון אחד בפריים.** אף אחד לא קורא פסקה בסטורי.
+- **הטקסט באמצע.** ב-1080x1920, שום דבר מעל y=250 או מתחת ל-y=1600. שורת הפרופיל יושבת למעלה ושורת התגובה למטה.
+- **מדברים לאדם אחד.** בסטוריז הפנייה ביחיד מרגישה טבעית, כי הם הדבר הכי קרוב להודעה פרטית שהוא לא הודעה פרטית. בעברית בוחרים מגדר לפי `voice.md`, ואם הקהל מעורב, מנסחים בלי מגדר ("מי שרוצה...", "שווה לנסות").
+- **לא משתפים פוסט מהפיד לסטורי בלי להגיד כלום.** זה הפריים הכי מדולג בפלטפורמה. אם מפנים לפוסט, מספרים מה קרה בתגובות ולמה שווה לחזור אליו.
+- **מוכרים בסטוריז, לא בפוסטים.** שלושה פריימים של הקשר, פריים אחד של הצעה, פריים אחד של הוכחה. הרצף הזה מוכר יותר מפוסט בפיד על אותו דבר, ולא עולה בחשיפה.
 
-## The DM funnel, done honestly
+## משפך ההודעות, בצורה הוגנת
 
-The sequence that works: a story that names a problem, a question box or a poll
-that lets people say "that's me", and then a reply to each person who answered.
-The conversation starts because they spoke first.
+הרצף שעובד: סטורי שמציג בעיה, תיבת שאלות או סקר שמאפשרים לאנשים להגיד "זה אני", ואז תשובה לכל מי שענה. השיחה מתחילה כי הם דיברו ראשונים.
 
-Automated keyword DM replies are a real, supported feature for professional
-accounts, through Instagram's own tools and approved partners. Bulk DMing
-people who did not interact is not, and it is what gets accounts restricted.
-The rule is simple: **they act first, then you reply.**
+תשובות אוטומטיות להודעות לפי מילת מפתח הן יכולת אמיתית ונתמכת לחשבונות מקצועיים, דרך הכלים של אינסטגרם ושותפים מאושרים. שליחת הודעות בכמויות לאנשים שלא פנו היא לא, וזה מה שגורם להגבלת חשבונות. הכלל פשוט: **הם פועלים ראשונים, ואז אתם עונים.**
 
-## Output
+## פלט
 
-The frames in order, each with what is on screen, what is said, and which
-sticker, plus what to do with the answers:
+הפריימים לפי הסדר, לכל אחד מה על המסך, מה אומרים ואיזה סטיקר, ומה עושים עם התשובות:
 
 ```
-STORIES  ·  Tuesday  ·  5 frames
+סטוריז  ·  שלישי  ·  5 פריימים
 
-1  [selfie, walking]      "Third refund request this year. Same reason."
-2  [screen recording]     the clause, highlighted
-3  [talking]              "Approval is a feeling. Delivery is a date."
-4  [poll]                 "Have you been burned by a late approval?"  Yes / Not yet
-5  [text on photo]        "Reply and I will send you the clause."
+1  [סלפי, בהליכה]        "בקשת החזר שלישית השנה. אותה סיבה."
+2  [הקלטת מסך]           הסעיף, מודגש
+3  [מדברת למצלמה]        "אישור זה תחושה. מסירה זה תאריך."
+4  [סקר]                 "נפגעת פעם מאישור שהגיע מאוחר?"  כן / עוד לא
+5  [טקסט על תמונה]       "תעני לי ואשלח לך את הסעיף."
 
-After: everyone who votes Yes gets a reply. That is the whole funnel.
+אחרי: כל מי שהצביע כן מקבל תשובה. זה כל המשפך.
 ```
 
-Nothing is posted. The user posts it.
+שום דבר לא מתפרסם. המשתמשת מפרסמת בעצמה.
