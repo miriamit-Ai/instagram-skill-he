@@ -8,9 +8,20 @@ description: >-
   people posting in my niche", "reverse engineer this account", "build me a
   swipe file", "why is this reel doing numbers", or asks what to make next and
   has no evidence to answer with.
+  Hebrew (Miriam AI edition): מה ויראלי בתחום, ניתוח רילס מצליחים. עונה בעברית.
 ---
 
 # ig-viral
+
+> **גרסה עברית של Miriam AI.** הסקיל הזה עובד בעברית כברירת מחדל:
+> - כל מה שמוצג למשתמשת ונכתב בשבילה, בעברית מדוברת וטבעית, לא עברית של מסמך.
+> - פנייה ברבים (אתם) כברירת מחדל, אלא אם `~/.claude/instagram/voice.md` אומר אחרת. לא מערבבים מגדרים באותו טקסט.
+> - כותבים "פרומפט", "סקיל", "ריל" ו"רילס" כמו שאומרים אותם.
+> - בלי הסימן — (קו מפריד ארוך). זה סימן מובהק לטקסט של AI.
+> - מספרים עם ₪ כשמדובר בכסף בישראל. בודקים שמספרים ומילים באנגלית בתוך משפט עברי מוצגים בסדר הנכון.
+> - שמות הפקודות, הקבצים והכלים (כמו `/ig-reel` או `swipe.py`) נשארים באנגלית.
+> - נוסחאות הפתיח בעברית נמצאות ב-`ig-reel/hooks_he.json`. הכלים ב-Python מזהים עברית לבד.
+> - אם המשתמשת כותבת באנגלית, עונים באנגלית לפי ההוראות למטה.
 
 The research skill. Everything else in this pack writes; this one goes and
 looks. Run it monthly, not daily. Formulas last a season.

@@ -1,67 +1,59 @@
-# voice.md
+# voice.md (גרסה עברית של Miriam AI)
 
-Copy this to `~/.claude/instagram/voice.md` and fill it in. Every skill in the
-pack reads it. Ten minutes here is the difference between scripts you shoot and
-scripts you rewrite.
+מעתיקים את הקובץ הזה ל-`~/.claude/instagram/voice.md` וממלאים אותו. כל סקיל בחבילה קורא אותו. עשר דקות כאן הן ההבדל בין תסריטים שמצלמים לבין תסריטים שכותבים מחדש.
 
-If you would rather not fill it in by hand, send Claude three of your own reels
-or captions and say "write my voice.md from these". That works better than
-guessing at the answers.
+לא בא לכם למלא ידנית? שלחו לקלוד שלושה רילס או כיתובים שלכם ותכתבו "תכתוב לי voice.md מאלה". זה עובד טוב יותר מלנחש את התשובות.
 
-This file matters more on Instagram than anywhere else, because you have to say
-the words out loud. A line you would never say is not a draft, it is a retake.
+הקובץ הזה חשוב באינסטגרם יותר מכל מקום אחר, כי צריך להגיד את המילים בקול. משפט שלא הייתם אומרים הוא לא טיוטה, הוא עוד טייק.
 
 ---
 
-## Who I am
+## מי אני
 
-- **Name:**
-- **Handle:**
-- **What I do, in one sentence:**
-- **Who I am talking to:** (be specific: "photographers charging under $2,000",
-  not "creatives")
-- **What I sell:**
+- **שם:**
+- **שם משתמש:**
+- **מה אני עושה, במשפט אחד:**
+- **למי אני מדברת:** (ספציפי: "צלמות שגובות פחות מ-5,000 ₪", לא "יוצרים")
+- **מה אני מוכרת:**
 
-## What I sound like
+## איך אני נשמעת
 
-- **Three of my own reels or captions that sound most like me:** (paste them)
-- **On camera I am:** (fast and loud / dry / calm / funny / deadpan)
-- **Words I actually use:**
-- **Words I would never say out loud:**
-- **Do I swear:** (yes / mild / no)
-- **Emoji in captions:** (never / one, rarely / freely)
-- **Face on camera:** (always / sometimes / faceless)
-- **Voiceover or to-camera:**
-- **Pace:** (words per minute, if you have timed yourself reading a script.
-  `beats.py --wpm` uses this. Most people are between 150 and 200.)
+- **שלושה רילס או כיתובים שלי שהכי נשמעים כמוני:** (להדביק)
+- **מול המצלמה אני:** (מהירה ורועשת / יבשה / רגועה / מצחיקה / חותכת)
+- **מילים שאני באמת משתמשת בהן:**
+- **מילים שלא הייתי אומרת בקול:**
+- **פנייה לקהל:** (רבים "אתם" / נקבה "את" / זכר "אתה" / משתנה לפי הפוסט)
+- **סלנג ואנגלית:** (כמה מילים באנגלית אני משלבת? "פרומפט", "סקיל", "פידבק"...)
+- **קללות:** (כן / קלות / לא)
+- **אימוג'י בכיתובים:** (אף פעם / אחד, לפעמים / חופשי)
+- **פנים במצלמה:** (תמיד / לפעמים / בלי פנים)
+- **קריינות או מול המצלמה:**
+- **קצב:** (מילים לדקה, אם מדדתם. `beats.py --wpm` משתמש בזה. בעברית רוב האנשים בין 130 ל-180.)
 
-## My positions
+## העמדות שלי
 
-Three to five things I believe that some of my audience does not. These are
-where the good reels come from.
+שלושה עד חמישה דברים שאני מאמינה בהם וחלק מהקהל שלי לא. משם מגיעים הרילס הטובים.
 
 1.
 2.
 3.
 
-## Off limits
+## מחוץ לתחום
 
-- **Topics I do not post about:**
-- **Clients, numbers or names I cannot say publicly:**
-- **Claims I am not allowed to make:** (regulated industry, employer policy, NDA)
+- **נושאים שאני לא מפרסמת עליהם:**
+- **לקוחות, מספרים או שמות שאסור לי להגיד בפומבי:**
+- **טענות שאסור לי לטעון:** (תחום מפוקח, מדיניות של מעסיק, הסכם סודיות)
 
-## Proof I can use
+## הוכחות שאפשר להשתמש בהן
 
-Real numbers, outcomes and stories I am happy to put my name on. The skills will
-never invent one, so if this section is empty, every draft comes back with
-`{{your number}}` in it.
+מספרים, תוצאות וסיפורים אמיתיים שאני מוכנה לשים עליהם את השם שלי. הסקילים אף פעם לא ימציאו אחד, אז אם הסעיף הזה ריק, כל טיוטה תחזור עם `{{המספר שלך}}`.
 
 -
 -
 -
 
-## The ask
+## הבקשה
 
-- **My keyword CTA, if I use one:** (one word, sayable, no spaces)
-- **What the keyword sends them:**
-- **Where my link goes:**
+- **מילת המפתח לתגובה, אם יש:** (מילה אחת, קלה להגייה, בלי רווחים)
+- **מה מילת המפתח שולחת:**
+- **לאן הקישור שלי מוביל:**

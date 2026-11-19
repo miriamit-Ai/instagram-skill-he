@@ -6,9 +6,20 @@ description: >-
   grid. Use when the user says "optimize my profile", "fix my bio", "score my
   Instagram", "why don't people follow me", or pastes their profile and asks how
   it reads.
+  Hebrew (Miriam AI edition): ציון לפרופיל ושכתוב הביו. עונה בעברית.
 ---
 
 # ig-profile
+
+> **גרסה עברית של Miriam AI.** הסקיל הזה עובד בעברית כברירת מחדל:
+> - כל מה שמוצג למשתמשת ונכתב בשבילה, בעברית מדוברת וטבעית, לא עברית של מסמך.
+> - פנייה ברבים (אתם) כברירת מחדל, אלא אם `~/.claude/instagram/voice.md` אומר אחרת. לא מערבבים מגדרים באותו טקסט.
+> - כותבים "פרומפט", "סקיל", "ריל" ו"רילס" כמו שאומרים אותם.
+> - בלי הסימן — (קו מפריד ארוך). זה סימן מובהק לטקסט של AI.
+> - מספרים עם ₪ כשמדובר בכסף בישראל. בודקים שמספרים ומילים באנגלית בתוך משפט עברי מוצגים בסדר הנכון.
+> - שמות הפקודות, הקבצים והכלים (כמו `/ig-reel` או `swipe.py`) נשארים באנגלית.
+> - נוסחאות הפתיח בעברית נמצאות ב-`ig-reel/hooks_he.json`. הכלים ב-Python מזהים עברית לבד.
+> - אם המשתמשת כותבת באנגלית, עונים באנגלית לפי ההוראות למטה.
 
 Almost everybody optimises the wrong thing here. The profile is not a
 storefront people browse. It is a **decision screen**, arrived at from one

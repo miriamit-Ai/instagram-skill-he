@@ -6,9 +6,20 @@ description: >-
   Instagram insights or past posts and asks "what's working", "why did this
   flop", "read my analytics", "audit my content", or wants to know what to do
   more of.
+  Hebrew (Miriam AI edition): בדיקה של החשבון, מה עבד ומה לא. עונה בעברית.
 ---
 
 # ig-audit
+
+> **גרסה עברית של Miriam AI.** הסקיל הזה עובד בעברית כברירת מחדל:
+> - כל מה שמוצג למשתמשת ונכתב בשבילה, בעברית מדוברת וטבעית, לא עברית של מסמך.
+> - פנייה ברבים (אתם) כברירת מחדל, אלא אם `~/.claude/instagram/voice.md` אומר אחרת. לא מערבבים מגדרים באותו טקסט.
+> - כותבים "פרומפט", "סקיל", "ריל" ו"רילס" כמו שאומרים אותם.
+> - בלי הסימן — (קו מפריד ארוך). זה סימן מובהק לטקסט של AI.
+> - מספרים עם ₪ כשמדובר בכסף בישראל. בודקים שמספרים ומילים באנגלית בתוך משפט עברי מוצגים בסדר הנכון.
+> - שמות הפקודות, הקבצים והכלים (כמו `/ig-reel` או `swipe.py`) נשארים באנגלית.
+> - נוסחאות הפתיח בעברית נמצאות ב-`ig-reel/hooks_he.json`. הכלים ב-Python מזהים עברית לבד.
+> - אם המשתמשת כותבת באנגלית, עונים באנגלית לפי ההוראות למטה.
 
 The only honest source of what works for an account is that account. Every
 rule in every Instagram guide, including the ones in this pack, is a prior.

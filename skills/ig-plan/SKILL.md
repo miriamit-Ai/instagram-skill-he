@@ -5,9 +5,20 @@ description: >-
   engage with. Use when the user says "plan my week", "what should I post",
   "content calendar", "I have nothing to post about", or wants a posting
   schedule and an engagement list.
+  Hebrew (Miriam AI edition): תוכנית תוכן לשבוע. עונה בעברית.
 ---
 
 # ig-plan
+
+> **גרסה עברית של Miriam AI.** הסקיל הזה עובד בעברית כברירת מחדל:
+> - כל מה שמוצג למשתמשת ונכתב בשבילה, בעברית מדוברת וטבעית, לא עברית של מסמך.
+> - פנייה ברבים (אתם) כברירת מחדל, אלא אם `~/.claude/instagram/voice.md` אומר אחרת. לא מערבבים מגדרים באותו טקסט.
+> - כותבים "פרומפט", "סקיל", "ריל" ו"רילס" כמו שאומרים אותם.
+> - בלי הסימן — (קו מפריד ארוך). זה סימן מובהק לטקסט של AI.
+> - מספרים עם ₪ כשמדובר בכסף בישראל. בודקים שמספרים ומילים באנגלית בתוך משפט עברי מוצגים בסדר הנכון.
+> - שמות הפקודות, הקבצים והכלים (כמו `/ig-reel` או `swipe.py`) נשארים באנגלית.
+> - נוסחאות הפתיח בעברית נמצאות ב-`ig-reel/hooks_he.json`. הכלים ב-Python מזהים עברית לבד.
+> - אם המשתמשת כותבת באנגלית, עונים באנגלית לפי ההוראות למטה.
 
 The control room. Everything else in this pack executes; this decides what gets
 executed. Run it once a week, on the same day.

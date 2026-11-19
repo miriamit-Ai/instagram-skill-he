@@ -5,9 +5,20 @@ description: >-
   person with an opinion, not a bot. Use when the user pastes a post or a reel
   and wants a comment, says "comment on this", "engage with this", "what do I
   say here", or wants a batch for their daily engagement round.
+  Hebrew (Miriam AI edition): תגובות לפוסטים של אחרים. עונה בעברית.
 ---
 
 # ig-comment
+
+> **גרסה עברית של Miriam AI.** הסקיל הזה עובד בעברית כברירת מחדל:
+> - כל מה שמוצג למשתמשת ונכתב בשבילה, בעברית מדוברת וטבעית, לא עברית של מסמך.
+> - פנייה ברבים (אתם) כברירת מחדל, אלא אם `~/.claude/instagram/voice.md` אומר אחרת. לא מערבבים מגדרים באותו טקסט.
+> - כותבים "פרומפט", "סקיל", "ריל" ו"רילס" כמו שאומרים אותם.
+> - בלי הסימן — (קו מפריד ארוך). זה סימן מובהק לטקסט של AI.
+> - מספרים עם ₪ כשמדובר בכסף בישראל. בודקים שמספרים ומילים באנגלית בתוך משפט עברי מוצגים בסדר הנכון.
+> - שמות הפקודות, הקבצים והכלים (כמו `/ig-reel` או `swipe.py`) נשארים באנגלית.
+> - נוסחאות הפתיח בעברית נמצאות ב-`ig-reel/hooks_he.json`. הכלים ב-Python מזהים עברית לבד.
+> - אם המשתמשת כותבת באנגלית, עונים באנגלית לפי ההוראות למטה.
 
 Commenting is the highest-leverage twenty minutes on Instagram and the easiest
 to do badly. A comment near the top of a reel with 40,000 views is seen by more

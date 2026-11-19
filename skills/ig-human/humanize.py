@@ -133,7 +133,7 @@ def pass_lexical(text, lex):
                      key=lambda e: len(e["find"]), reverse=True)
     for entry in entries:
         find = entry["find"]
-        pattern = re.compile(r"\b" + re.escape(find).replace(r"\ ", r"\s+") + r"\b",
+        pattern = re.compile(r"\b" + re.escape(find).replace(r"\ ", r"\s+") + ("" if find.endswith("ש") else r"\b"),
                              re.IGNORECASE)
         found = pattern.findall(text)
         if not found:

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "note": "Lexicon used by humanize.py and detect.py. Replacements are plain-English and keep the sentence grammatical. The last block of each list is Instagram-specific: caption and voiceover slop that does not show up on other platforms. Edit freely - it is meant to be yours.",
+  "note": "Lexicon used by humanize.py and detect.py. Replacements are plain-English and keep the sentence grammatical. The last block of each list is Instagram-specific: caption and voiceover slop that does not show up on other platforms. Edit freely - it is meant to be yours. Miriam AI Hebrew edition: Hebrew entries are tagged with families starting with 'he-'.",
   "invisible": [
     {
       "cp": "U+200B",
@@ -630,6 +630,71 @@
       "find": "hack",
       "replace": "trick",
       "family": "nouns"
+    },
+    {
+      "find": "לצלול לעומק",
+      "replace": "להיכנס",
+      "family": "he-words"
+    },
+    {
+      "find": "צלילה עמוקה",
+      "replace": "הסבר",
+      "family": "he-words"
+    },
+    {
+      "find": "מהפכני",
+      "replace": "חדש",
+      "family": "he-words"
+    },
+    {
+      "find": "מהפכנית",
+      "replace": "חדשה",
+      "family": "he-words"
+    },
+    {
+      "find": "פורץ דרך",
+      "replace": "חדש",
+      "family": "he-words"
+    },
+    {
+      "find": "פורצת דרך",
+      "replace": "חדשה",
+      "family": "he-words"
+    },
+    {
+      "find": "חסר תקדים",
+      "replace": "חדש",
+      "family": "he-words"
+    },
+    {
+      "find": "משנה את כללי המשחק",
+      "replace": "משנה הרבה",
+      "family": "he-words"
+    },
+    {
+      "find": "סינרגיה",
+      "replace": "שיתוף",
+      "family": "he-words"
+    },
+    {
+      "find": "למנף",
+      "replace": "להשתמש ב",
+      "family": "he-words"
+    },
+    {
+      "find": "אקוסיסטם",
+      "replace": "מערכת",
+      "family": "he-words"
+    },
+    {
+      "find": "האולטימטיבי",
+      "replace": "הטוב",
+      "family": "he-words"
+    },
+    {
+      "find": "האולטימטיבית",
+      "replace": "הטובה",
+      "family": "he-words"
     }
   ],
   "phrases": [
@@ -922,6 +987,81 @@
       "find": "go viral overnight",
       "replace": "get reach",
       "family": "nouns"
+    },
+    {
+      "find": "בעולם של היום",
+      "replace": "היום",
+      "family": "he-openers"
+    },
+    {
+      "find": "בעידן הדיגיטלי",
+      "replace": "היום",
+      "family": "he-openers"
+    },
+    {
+      "find": "בעולם המשתנה במהירות",
+      "replace": "היום",
+      "family": "he-openers"
+    },
+    {
+      "find": "חשוב לציין ש",
+      "replace": "",
+      "family": "he-openers"
+    },
+    {
+      "find": "ראוי לציין ש",
+      "replace": "",
+      "family": "he-openers"
+    },
+    {
+      "find": "בואו נצלול",
+      "replace": "בואו נתחיל",
+      "family": "he-openers"
+    },
+    {
+      "find": "אין ספק ש",
+      "replace": "",
+      "family": "he-openers"
+    },
+    {
+      "find": "לסיכום,",
+      "replace": "",
+      "family": "he-openers"
+    },
+    {
+      "find": "במילים אחרות,",
+      "replace": "",
+      "family": "he-openers"
+    },
+    {
+      "find": "יתרה מזאת,",
+      "replace": "וגם",
+      "family": "he-openers"
+    },
+    {
+      "find": "בנוסף לכך,",
+      "replace": "וגם",
+      "family": "he-openers"
+    },
+    {
+      "find": "כפי שניתן לראות,",
+      "replace": "",
+      "family": "he-openers"
+    },
+    {
+      "find": "מסע מרתק",
+      "replace": "",
+      "family": "he-openers"
+    },
+    {
+      "find": "בסופו של דבר,",
+      "replace": "",
+      "family": "he-openers"
+    },
+    {
+      "find": "הסוד להצלחה",
+      "replace": "מה שעובד",
+      "family": "he-openers"
     }
   ],
   "structures": [
@@ -1020,6 +1160,24 @@
       "regex": "(?i)\\b(?:follow for more|tag someone who|double tap if|share this if|comment below if)\\b",
       "name": "Reflex follow or tag bait",
       "fix": "Ask for the one action this post actually earns. The generic ask trains the audience to ignore every ask."
+    },
+    {
+      "id": "he-not-just",
+      "regex": "זה לא רק [^.!?\\n]{2,60}[,.] (?:זה|אלא)",
+      "name": "\"זה לא רק X, זה Y\"",
+      "fix": "תגידו את הדבר האחד שאתם מתכוונים אליו. תמחקו את החצי הראשון."
+    },
+    {
+      "id": "he-not-only",
+      "regex": "לא רק\\b[^.!?\\n]{2,80}\\bאלא גם",
+      "name": "\"לא רק X אלא גם Y\"",
+      "fix": "לפצל לשני משפטים, או לוותר על החצי החלש."
+    },
+    {
+      "id": "he-isnt-about",
+      "regex": "(?:זה|הסיפור) לא על [^.!?\\n]{2,60}[.!] (?:זה|הוא) על",
+      "name": "\"זה לא על X. זה על Y.\"",
+      "fix": "להתחיל ב-Y. ההיפוך הוא הסימן."
     }
   ]
 }

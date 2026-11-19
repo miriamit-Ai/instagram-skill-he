@@ -1,147 +1,120 @@
 ---
 name: ig-reel
 description: >-
-  Write an Instagram Reel from a raw idea - hook options off 26 formulas, the
-  spoken script, the on-screen text, and a timed beat sheet - in the user's own
-  voice and scored before they shoot it. Use whenever the user wants a Reel, a
-  short-form video script, a hook, a voiceover, "make a reel about X", "what
-  should I say in this video", or is about to record and does not have the
-  first line yet.
+  כותב ריל לאינסטגרם בעברית מרעיון גולמי: אפשרויות פתיח מתוך 26 נוסחאות, התסריט
+  המדובר, הטקסט למסך ודף תזמון, בקול של המשתמשת ועם ציון לפני הצילום. להפעיל
+  כשמבקשים ריל, תסריט לסרטון קצר, פתיח, קריינות, "תכתוב לי ריל על...", "מה להגיד
+  בסרטון הזה", או כשמישהי עומדת לצלם ואין לה עדיין את המשפט הראשון. Hebrew-first
+  Reel writer: hooks, script, on-screen text and a timed beat sheet.
 ---
 
-# ig-reel
+# ig-reel (גרסה עברית של Miriam AI)
 
-Turns one raw idea into a Reel that somebody finishes.
+הופך רעיון גולמי אחד לריל שאנשים צופים בו עד הסוף.
 
-Two tools live in this folder and they both actually run. Use them. Do not
-eyeball the hook and do not guess at the length.
+בתיקייה יש שני כלים שבאמת רצים. משתמשים בהם. לא מעריכים את הפתיח בעין ולא מנחשים את האורך.
 
 ```bash
-python3 hookscore.py hooks.txt              # rank your hook options
-python3 hookscore.py --hook "one line"      # score a single one
-python3 beats.py script.txt --target 30     # timed beat sheet before you shoot
+python3 hookscore.py hooks.txt              # מדרג את אפשרויות הפתיח
+python3 hookscore.py --hook "שורה אחת"      # ציון לפתיח אחד
+python3 beats.py script.txt --target 30     # דף תזמון לפני הצילום
 ```
 
-## Before you write
+שני הכלים מזהים עברית לבד. בעברית הם בודקים עם רשימות מילים עבריות (מספרים במילים, ₪, מילות מתח, פתיחות חלשות, פנייה לצופה) ומתחשבים באותיות השימוש (ו, ה, ב, ל, מ, ש, כ). קצב ברירת המחדל לעברית הוא 150 מילים לדקה, שנמדד על ריל עברי אמיתי. מי שמדברת מהר או לאט מעבירה `--wpm`.
 
-1. Read `~/.claude/instagram/voice.md` if it exists. That is the user's voice
-   profile: how they talk on camera, what they never say, who they are talking
-   to. If it does not exist, ask for **three of their own reels**, transcribe or
-   read them, infer the voice, and write the file. A script in the wrong voice
-   is unusable, because they have to say it out loud.
-2. Read `hooks.json` in this folder. 26 formulas, each with a template, a filled
-   example, the on-screen version, what it is for, and how it gets ruined.
-   Four of them are in there because they kept turning up in real hooks, not
-   because they completed a pattern.
-3. If the idea is thin, do not pad it. Ask one batched question: what happened,
-   to whom, and what did it cost or return. A Reel needs one specific true
-   thing. Get it before writing.
-4. If `~/.claude/instagram/swipe.md` exists, read it. `/ig-viral` writes that
-   file, and it is the user's own evidence about which formulas are working in
-   their niche right now. It beats the defaults in this file.
+## לפני שכותבים
 
-## The shape
+1. קוראים את `~/.claude/instagram/voice.md` אם הוא קיים. זה פרופיל הקול של המשתמשת: איך היא מדברת מול מצלמה, מה היא אף פעם לא אומרת, למי היא מדברת, באיזה מגדר היא פונה. אם הוא לא קיים, מבקשים **שלושה רילס שלה**, מתמללים או קוראים אותם, מסיקים את הקול וכותבים את הקובץ. תסריט בקול הלא נכון לא שווה כלום, כי היא צריכה להגיד אותו בקול.
+2. קוראים את `hooks_he.json` בתיקייה. 26 נוסחאות בעברית, לכל אחת תבנית, דוגמה, גרסה למסך, למה היא טובה ואיך הורסים אותה. `hooks.json` הוא המקור באנגלית, ומשתמשים בו רק כשהמשתמשת כותבת באנגלית.
+3. אם הרעיון דק, לא מנפחים אותו. שואלים שאלה אחת מרוכזת: מה קרה, למי, ומה זה עלה או החזיר. ריל צריך דבר אחד ספציפי ואמיתי. משיגים אותו לפני שכותבים.
+4. אם `~/.claude/instagram/swipe.md` קיים, קוראים אותו. `/ig-viral` כותב את הקובץ הזה, והוא ההוכחה של המשתמשת עצמה לאילו נוסחאות עובדות בתחום שלה עכשיו. הוא גובר על ברירות המחדל כאן.
 
-A Reel is decided in the first two seconds and kept by the next five.
+## המבנה
+
+ריל מוכרע בשתי השניות הראשונות ונשמר בחמש שאחריהן.
 
 ```
-0:00 - 0:02   HOOK        the claim. Spoken line and on-screen line, written
-                          separately. Motion in the first frame, not a static face.
-0:02 - 0:07   THE STAKE   why this matters to the person watching. One line.
-0:07 - ...    THE BODY    one idea per beat, and the frame changes every beat.
-LAST 3s       THE PAYOFF  deliver what the hook promised, then the single ask.
-LAST LINE     THE LOOP    echo one word from the hook so the replay lands clean.
+0:00 - 0:02   פתיח        הטענה. משפט מדובר ושורה למסך, כתובים בנפרד.
+                          תנועה בפריים הראשון, לא פנים סטטיות.
+0:02 - 0:07   מה על הכף   למה זה חשוב לצופה. משפט אחד.
+0:07 - ...    הגוף        רעיון אחד בכל קטע, והפריים משתנה בכל קטע.
+3 שניות אחרונות התמורה    מקיימים את מה שהפתיח הבטיח, ואז בקשה אחת.
+שורה אחרונה   הלולאה      חוזרים על מילה מהפתיח כדי שהצפייה החוזרת תתחבר.
 ```
 
-Length: 15 to 45 seconds is the working range. Reels run to 3 minutes and
-almost nobody should use it. Under 7 seconds the loop counts inflate and
-nothing else does.
+אורך: 15 עד 45 שניות זה הטווח שעובד. רילס יכולים להגיע ל-3 דקות וכמעט אף אחד לא צריך את זה. מתחת ל-7 שניות רק מספר הצפיות החוזרות מתנפח, ושום דבר אחר.
 
-## The loop
+## התהליך
 
-**1. Pick three hooks, not one.** Run the idea through `hooks.json`, choose
-three formulas that genuinely fit it, and write the spoken line plus the
-on-screen line for each. Different formulas, not three rewrites of one.
+**1. בוחרים שלושה פתיחים, לא אחד.** מעבירים את הרעיון דרך `hooks_he.json`, בוחרים שלוש נוסחאות שבאמת מתאימות, וכותבים לכל אחת משפט מדובר ושורה למסך. נוסחאות שונות, לא שלושה ניסוחים של אותה אחת.
 
-**2. Score them.** Put the three spoken lines in a file, one per line, and run
-`hookscore.py`. Show the user the ranking. If the top one is under 50, you do
-not have the hook yet and no amount of editing fixes that.
+**2. נותנים ציון.** שמים את שלושת המשפטים המדוברים בקובץ, אחד בכל שורה, ומריצים `hookscore.py`. מראים למשתמשת את הדירוג. אם הראשון מתחת ל-50, עוד אין פתיח, ושום עריכה לא תתקן את זה.
 
-**3. Write the script** on the winning hook. Plain spoken language, the way the
-user actually talks. Contractions. Short lines. No sentence they would have to
-rehearse.
+**3. כותבים את התסריט** על הפתיח המנצח. עברית מדוברת, כמו שהמשתמשת באמת מדברת. משפטים קצרים. בלי משפט שהיא תצטרך לחזור עליו לפני שהיא מצליחה להגיד אותו.
 
-**4. Time it.** Run `beats.py script.txt --target {length}`. Fix every flag:
-a hook past 3 seconds, any beat over 4 seconds, a run of beats with nothing
-concrete in them, no loop. Re-run until it is clean.
+**4. מתזמנים.** מריצים `beats.py script.txt --target {אורך}`. מתקנים כל סימון: פתיח מעבר ל-3 שניות, קטע מעבר ל-4 שניות, רצף קטעים בלי שום דבר מוחשי, אין לולאה. מריצים שוב עד שזה נקי.
 
-**5. Humanize it.** Run the script through `/ig-human` before showing it. A
-written-sounding line is obvious the moment someone says it out loud.
+**5. מאנישים.** מעבירים את התסריט דרך `/ig-human` לפני שמראים אותו. משפט שנשמע כתוב בולט ברגע שמישהו אומר אותו בקול.
 
-**6. Print the block.** The script in a fenced block, the on-screen text as a
-separate list with timings, and then:
+**6. מדפיסים את הבלוק.** התסריט בבלוק קוד, הטקסט למסך כרשימה נפרדת עם תזמונים, ואז:
 
 ```
-REEL READY
-hook:       #3 Nobody Tells You, scored 86 STRONG
-length:     28.4s across 9 beats at 165 wpm
-on-screen:  6 cards
-humanizer:  4 artefacts stripped, human score 81 PASS
-caption:    run /ig-caption next
+הריל מוכן
+פתיח:       #3 אף אחד לא מספר לכם, ציון 87 STRONG
+אורך:       28.4 שניות, 9 קטעים, 150 מילים לדקה
+על המסך:    6 כרטיסים
+מאניש:      4 סימנים הוסרו, ציון אנושי 81 PASS
+כיתוב:      להריץ /ig-caption
 
-Reply "yes" to log it, or tell me what to change.
+תכתבי "כן" כדי לשמור ביומן, או מה לשנות.
 ```
 
-**7. Never publish.** This skill produces a script. The user shoots it and
-posts it. On "yes", append to `~/.claude/instagram/log.md` with the date, the
-hook formula used and the first line, so `/ig-audit` has a history later.
+**7. אף פעם לא מפרסמים.** הסקיל הזה מייצר תסריט. המשתמשת מצלמת ומפרסמת. אחרי "כן", מוסיפים ל-`~/.claude/instagram/log.md` את התאריך, הנוסחה והשורה הראשונה, כדי של-`/ig-audit` תהיה היסטוריה.
 
-## On-screen text is a separate script
+## הטקסט למסך הוא תסריט נפרד
 
-Write it separately, every time. It is read before it is heard.
+כותבים אותו בנפרד, כל פעם. קוראים אותו לפני ששומעים.
 
-- **Six words or fewer per card.** It is being read at arm's length by someone
-  who is not listening yet.
-- **The hook card is up at frame 1**, not after a beat of silence.
-- **Keep it inside the safe zone.** On a 1080x1920 frame, nothing above y=230
-  or below y=1440, and keep the right 230 pixels clear. The interface sits on
-  top of everything outside that box: the caption, the action rail, the audio
-  strip.
-- **Never put the hook where the caption sits.** That is the bottom of the
-  frame and it is covered.
-- **Burn in captions for the body.** Most people watch muted first.
+- **עד שש מילים בכרטיס.** קוראים אותו מטווח של יד, ומי שקורא עוד לא מקשיב.
+- **כרטיס הפתיח מופיע בפריים הראשון**, לא אחרי רגע של שקט.
+- **נשארים באזור הבטוח.** בפריים של 1080x1920, שום דבר מעל y=230 או מתחת ל-y=1440, ו-230 הפיקסלים הימניים נשארים ריקים. הממשק יושב מעל כל מה שמחוץ לתיבה הזאת: הכיתוב, כפתורי הפעולה, פס האודיו.
+- **עברית מימין לשמאל.** בודקים בעין שמספרים, סימני ₪ ומילים באנגלית בתוך משפט עברי מופיעים בסדר הנכון. כלי עריכה רבים הופכים אותם.
+- **אף פעם לא שמים את הפתיח איפה שהכיתוב יושב.** זה החלק התחתון של הפריים, והוא מוסתר.
+- **כתוביות צרובות לגוף הסרטון.** רוב האנשים צופים קודם בלי קול.
 
-## Rules that make the difference
+## כללים שעושים את ההבדל
 
-- **One idea per Reel.** If the script has two, you have two Reels. Say so.
-- **Numbers over adjectives.** "$4,200" beats "a lot". If the user has not
-  given a number, ask for one rather than writing around the hole.
-- **Cut the intro.** No greeting, no "in this video", no name, no logo sting.
-  The video starts at the sentence you would normally reach at second six.
-- **Change the frame every beat.** A static shot for 8 seconds is where people
-  leave, and `beats.py` will flag it.
-- **One ask at the end.** Comment a keyword, save it, or follow. One.
-- **Never fabricate.** No invented metrics, clients, revenue or outcomes under
-  the user's name, even as a placeholder. If a number is needed and unknown,
-  leave `{{your number}}` in the script and flag it.
-- **Do not write a script around a trending audio the user cannot use.** If the
-  idea needs the user's own voice, say so.
+- **רעיון אחד לריל.** אם בתסריט יש שניים, יש שני רילס. אומרים את זה.
+- **מספרים במקום תארים.** "4,200 ₪" עדיף על "הרבה". אם המשתמשת לא נתנה מספר, שואלים במקום לכתוב מסביב לחור.
+- **חותכים את ההקדמה.** בלי ברכה, בלי "בסרטון הזה", בלי שם, בלי פתיח עם לוגו. הסרטון מתחיל במשפט שבדרך כלל הייתם מגיעים אליו בשנייה השישית.
+- **מחליפים פריים בכל קטע.** שוט סטטי של 8 שניות זה המקום שבו אנשים עוזבים, ו-`beats.py` יסמן את זה.
+- **בקשה אחת בסוף.** להגיב מילת מפתח, לשמור, או לעקוב. אחת.
+- **אף פעם לא ממציאים.** בלי מדדים, לקוחות, הכנסות או תוצאות מומצאים בשם המשתמשת, גם לא כמילוי זמני. אם צריך מספר ואין אותו, משאירים `{{המספר שלך}}` בתסריט ומסמנים.
+- **לא כותבים תסריט סביב סאונד טרנדי שהמשתמשת לא יכולה להשתמש בו.** אם הרעיון צריך את הקול שלה, אומרים את זה.
 
-## Example
+## כתיבה בעברית
+
+- עברית מדוברת, לא עברית של מסמך. "זה עובד ככה", לא "להלן אופן הפעולה".
+- פנייה ברבים (אתם) כברירת מחדל, אלא אם `voice.md` אומר אחרת. לא מערבבים בין זכר, נקבה ורבים באותו תסריט.
+- כותבים "פרומפט", "סקיל", "ריל" ו"רילס" כמו שאומרים אותם.
+- בלי הסימן —. בעברית מדוברת אין לו מקום, ו-`hookscore.py` מסמן אותו.
+- שמות של כלים כותבים כמו שאומרים אותם בעברית (קלוד, אינסטגרם) או באנגלית אם כך המשתמשת אומרת. לא מערבבים באותו תסריט.
+
+## דוגמה
 
 ```
-/ig-reel we cut proposal time from 5 hours to 20 minutes with one template
+/ig-reel קיצרנו הכנת הצעת מחיר מחמש שעות לעשרים דקות עם תבנית אחת
 ```
 
 ```
-HOOKS  (scored)
-  86  STRONG  #5  Time Collapse   "Proposals used to take me five hours. Twenty minutes now."
-                                  on screen: 5 HOURS -> 20 MIN
-  71  STRONG  #1  Cost Confession "I billed four hours a week for formatting. For two years."
-                                  on screen: 2 YEARS WASTED
-  54  OK      #9  The Steal       "Steal the proposal template that did it."
-                                  on screen: STEAL THIS
+פתיחים (עם ציון)
+  79  STRONG  #5  קיצור זמן       "הצעת מחיר הייתה לוקחת לי חמש שעות. היום עשרים דקות."
+                                  על המסך: 5 שעות ← 20 דקות
+  79  STRONG  #1  וידוי על מחיר   "בזבזתי ארבע שעות בשבוע על עיצוב מסמכים. במשך שנתיים."
+                                  על המסך: שנתיים לפח
+  52  OK      #9  תגנבו את זה      "תגנבו את התבנית שעשתה את זה."
+                                  על המסך: תגנבו את זה
 
-Shooting #5: the ratio is believable, it reads in one glance on screen,
-and the number is yours.
+שני הראשונים שווים בציון. מצלמים את #5: היחס אמין, נקרא במבט אחד על המסך,
+והמספר שלכם. הציון לא מכריע בין שני פתיחים טובים, השיפוט כן.
 ```

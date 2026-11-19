@@ -1,18 +1,18 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "instagram-agent-skill",
-  "description": "The Instagram agent skill pack for Claude",
+  "name": "instagram-skill-he",
+  "description": "סוכן אינסטגרם בעברית לקלוד, גרסה עברית של Miriam AI",
   "owner": {
-    "name": "Jake Schincariol",
-    "url": "https://opusjake.ai"
+    "name": "Miriam AI",
+    "url": "https://www.instagram.com/miriamit.ai/"
   },
   "plugins": [
     {
-      "name": "instagram-agent",
-      "description": "Thirteen Claude skills that run an Instagram account, including a scored hook panel, a viral research skill, a caption linter and a humanizer.",
+      "name": "instagram-agent-he",
+      "description": "13 סקילים לאינסטגרם בעברית, כולל 26 נוסחאות פתיח בעברית עם ציון, מחקר ויראליות ומאניש.",
       "source": "./",
       "category": "productivity",
-      "homepage": "https://github.com/Jakeschincariol/instagram-agent-skill"
+      "homepage": "https://github.com/miriamit-Ai/instagram-skill-he"
     }
   ]
 }

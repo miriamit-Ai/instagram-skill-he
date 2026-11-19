@@ -23,19 +23,44 @@ Usage
 
 import argparse
 import json
+import os
 import re
 import sys
 
-WORD_RE = re.compile(r"[A-Za-z0-9$%'’-]+")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import he_lexicon as HE  # Hebrew support, Miriam AI Hebrew edition
+
+WORD_RE = HE.WORD_RE  # Latin and Hebrew letters
 SENT_RE = re.compile(r"[^.!?]+[.!?]*")
-CONCRETE_RE = re.compile(r"\$\s?\d|\b\d[\d,.]*\b|(?<!^)\b[A-Z][a-z]{2,}\b", re.MULTILINE)
+CONCRETE_RE = re.compile(r"[$₪]\s?\d|\b\d[\d,.]*\b|(?<!^)\b[A-Z][a-z]{2,}\b", re.MULTILINE)
 STOPWORDS = {
     "the", "a", "an", "and", "or", "but", "if", "of", "to", "in", "on", "for",
     "with", "that", "this", "it", "is", "are", "was", "were", "be", "been",
     "you", "your", "i", "my", "me", "we", "our", "they", "them", "he", "she",
     "so", "just", "not", "no", "do", "did", "does", "have", "has", "had",
     "will", "can", "at", "as", "by", "from", "out", "up", "off", "one", "all",
+    # Hebrew
+    "את", "של", "על", "עם", "זה", "זאת", "הוא", "היא", "הם", "הן", "אני", "אתם",
+    "אתן", "לא", "כן", "יש", "אין", "גם", "רק", "כל", "מה", "מי", "כי", "אם",
+    "או", "אבל", "לי", "לך", "לכם", "שלי", "שלכם", "שלך", "אז", "פה", "כאן",
 }
+
+
+def concrete(text):
+    n = len(CONCRETE_RE.findall(text))
+    if HE.is_hebrew(text):
+        n += sum(1 for w in words(text) if HE.hit(w, HE.SPOKEN_NUMBERS) or HE.hit(w, HE.MONEY_WORDS) or HE.hit(w, HE.BRANDS))
+    return n
+
+
+def stems(text):
+    out = set()
+    for w in words(text):
+        v = HE.variants(w)
+        if v[0] in STOPWORDS or v[-1] in STOPWORDS:
+            continue
+        out.add(v[-1])
+    return out
 
 HOOK_WINDOW = 3.0        # seconds. Past this, the thumb has already decided.
 MAX_BEAT = 4.0           # seconds on one idea with no change on screen.
@@ -98,7 +123,7 @@ def analyse(raw, wpm=165, target=None):
             "dur": round(dur, 2),
             "words": n,
             "text": text,
-            "concrete": len(CONCRETE_RE.findall(text)),
+            "concrete": concrete(text),
             "label": "",
             "flags": [],
         })
@@ -146,8 +171,8 @@ def analyse(raw, wpm=165, target=None):
             run, start = 0, None
 
     # Does the last line hand you back to the first one?
-    first = {w.lower() for w in words(rows[0]["text"]) if w.lower() not in STOPWORDS}
-    last = {w.lower() for w in words(rows[-1]["text"]) if w.lower() not in STOPWORDS}
+    first = stems(rows[0]["text"])
+    last = stems(rows[-1]["text"])
     loop = sorted(pretty(w) for w in first & last)
     if loop:
         notes.append(f"Loops: the last beat repeats \"{', '.join(loop[:3])}\" from the hook. "
@@ -194,13 +219,14 @@ def render(a, out=sys.stdout):
 def main():
     ap = argparse.ArgumentParser(description="Time a Reel script into a beat sheet.")
     ap.add_argument("input", nargs="?", default="-", help="script file, or - for stdin")
-    ap.add_argument("--wpm", type=float, default=165, help="speaking rate (default 165)")
+    ap.add_argument("--wpm", type=float, default=None, help="speaking rate (default 165, Hebrew 150)")
     ap.add_argument("--target", type=float, help="target length in seconds")
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args()
 
     raw = sys.stdin.read() if args.input == "-" else open(args.input, encoding="utf-8").read()
-    a = analyse(raw, wpm=args.wpm, target=args.target)
+    wpm = args.wpm or (HE.DEFAULT_WPM if HE.is_hebrew(raw) else 165)
+    a = analyse(raw, wpm=wpm, target=args.target)
     if not a:
         print("empty script", file=sys.stderr)
         sys.exit(2)

@@ -33,10 +33,10 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 LEX = os.path.join(HERE, "slop.json")
 
 SENT_RE = re.compile(r"[^.!?\n]+[.!?]*")
-WORD_RE = re.compile(r"[A-Za-z']+")
+WORD_RE = re.compile(r"[\u05D0-\u05EAA-Za-z']+")  # Latin and Hebrew letters
 CONTRACTIONS = re.compile(r"\b\w+'(?:s|t|re|ve|ll|d|m)\b", re.IGNORECASE)
-PRONOUNS = re.compile(r"\b(i|me|my|mine|we|us|our|you|your)\b", re.IGNORECASE)
-NUMBERS = re.compile(r"\b\d[\d,.]*%?\b|\$\d")
+PRONOUNS = re.compile(r"\b(i|me|my|mine|we|us|our|you|your|אני|שלי|לי|אנחנו|שלנו|אתם|אתן|שלכם|לכם|אתה|את|שלך)\b", re.IGNORECASE)
+NUMBERS = re.compile(r"\b\d[\d,.]*%?\b|[$₪]\d|\d\s?₪")
 PROPER = re.compile(r"(?<![.!?]\s)(?<!^)\b[A-Z][a-z]{2,}\b", re.MULTILINE)
 
 
@@ -89,7 +89,7 @@ def check_slop(text, lex):
         return 50.0, "empty"
     hits, found = 0, []
     for entry in lex["words"] + lex["phrases"]:
-        pattern = re.compile(r"\b" + re.escape(entry["find"]).replace(r"\ ", r"\s+") + r"\b",
+        pattern = re.compile(r"\b" + re.escape(entry["find"]).replace(r"\ ", r"\s+") + ("" if entry["find"].endswith("ש") else r"\b"),
                              re.IGNORECASE)
         n = len(pattern.findall(text))
         if n:

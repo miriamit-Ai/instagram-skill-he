@@ -33,8 +33,12 @@ Usage
 import argparse
 import json
 import re
+import os
 import statistics
 import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import he_lexicon as HE  # Hebrew support, Miriam AI Hebrew edition
 
 WORD_RE = re.compile(r"[A-Za-z0-9$%'’-]+")
 NUMBER_RE = re.compile(
@@ -213,15 +217,110 @@ def check_address(text):
 CHECKS = ["LENGTH", "SPECIFICITY", "STAKES", "FRONTLOAD", "ADDRESS"]
 
 
+# ---------- Hebrew versions of the five checks (Miriam AI Hebrew edition) ----------
+# Same five properties, same scoring scale. Word lists live in he_lexicon.py.
+# Hebrew lines are shorter in words for the same meaning, so the length window is
+# 4-10 words instead of 5-12, and timing uses ~140 words per minute.
+
+def he_words(text):
+    return HE.WORD_RE.findall(re.sub(r"(?<=\d),(?=\d)", "", text))
+
+
+def he_check_length(text):
+    w = he_words(text); n = len(w)
+    secs = n / (HE.DEFAULT_WPM / 60)
+    chars = len(text.strip())
+    if 4 <= n <= 10:
+        score = 100.0
+    elif n < 4:
+        score = clamp(100 - (4 - n) * 22)
+    else:
+        score = clamp(100 - (n - 10) * 12)
+    if chars > 50:
+        score -= 12
+    return clamp(score), f"{n} מילים, {chars} תווים, בערך {secs:.1f} שניות בדיבור (רצוי 4 עד 10 מילים)"
+
+
+def he_check_specificity(text):
+    nums = [n.strip() for n in HE.NUMBER_RE.findall(text) if n.strip()]
+    w = he_words(text)
+    spoken = [x for x in w if HE.hit(x, HE.SPOKEN_NUMBERS) or HE.hit(x, HE.MONEY_WORDS)]
+    latin = [x for x in w if re.match(r"^[A-Z][a-z]{2,}", x) or HE.hit(x, HE.BRANDS)]   # brand and tool names
+    hits = len(nums) + len(spoken) + len(latin)
+    score = 15.0 if hits == 0 else clamp(45 + hits * 30)
+    found = ", ".join((nums + spoken + latin)[:4])
+    return score, (f"{hits} פרטים מוחשיים" + (f": {found}" if found else " - אין מספר, אין שם, אין שום דבר שאפשר לבדוק"))
+
+
+def he_check_stakes(text):
+    w = he_words(text)
+    markers = sorted({HE.norm(x) for x in w if HE.hit(x, HE.STAKES)})
+    if re.search(r"[₪$]\s?\d|\d\s?₪", text):
+        markers.append("מחיר")
+    n = len(markers)
+    score = {0: 20.0, 1: 70.0}.get(n, 100.0)
+    return clamp(score), (f"{n} סימני מתח" + (f": {', '.join(markers[:4])}" if markers else " - שום דבר לא מונח על הכף בשורה הזאת"))
+
+
+def he_check_frontload(text):
+    w = he_words(text)
+    if not w:
+        return 0.0, "ריק"
+    low = [HE.norm(x) for x in w]
+    opener = " ".join(low[:2])
+    penalty, hit_opener = 0, None
+    for weak in HE.WEAK_OPENERS:
+        if opener.startswith(weak) or low[0] == weak:
+            penalty, hit_opener = 30, weak
+            break
+    payload = None
+    for i, tok in enumerate(w):
+        if (HE.hit(tok, HE.STAKES) or HE.hit(tok, HE.SPOKEN_NUMBERS) or HE.hit(tok, HE.MONEY_WORDS)
+                or HE.NUMBER_RE.match(tok) or re.match(r"^[A-Z][a-z]{2,}", tok)):
+            payload = i
+            break
+    if payload is None:
+        base, where = 30.0, "אין מילת מטען בכל השורה"
+    elif payload <= 2:
+        base, where = 100.0, f"המטען במילה {payload + 1}"
+    elif payload <= 5:
+        base, where = 70.0, f"המטען במילה {payload + 1}, אפשר להקדים"
+    else:
+        base, where = 40.0, f"המטען במילה {payload + 1}, מאוחר מדי"
+    return clamp(base - penalty), where + (f"; פתיחה חלשה \"{hit_opener}\"" if hit_opener else "")
+
+
+def he_check_address(text):
+    w = he_words(text)
+    if any(HE.hit(x, HE.ADDRESS) for x in w) or re.search(r"[\u05D0-\u05EA]{2,}(?:כם|כן)\b", text):
+        return 100.0, "פונה לצופה"
+    if w and HE.hit(w[0], HE.IMPERATIVES):
+        return 90.0, f"נפתח בציווי (\"{w[0]}\")"
+    if any(HE.hit(x, HE.FIRST_PERSON) or (len(HE.norm(x)) > 3 and HE.norm(x).endswith("תי")) for x in w):
+        return 70.0, "גוף ראשון, בלי פנייה לצופה"
+    return 35.0, "גוף שלישי, אף אחד לא בחדר"
+
+
 def run(text):
-    results = {
-        "LENGTH": check_length(text),
-        "SPECIFICITY": check_specificity(text),
-        "STAKES": check_stakes(text),
-        "FRONTLOAD": check_frontload(text),
-        "ADDRESS": check_address(text),
-    }
-    flags = [msg for pattern, msg in DEALBREAKERS if pattern.search(text)]
+    hebrew = HE.is_hebrew(text)
+    if hebrew:
+        results = {
+            "LENGTH": he_check_length(text),
+            "SPECIFICITY": he_check_specificity(text),
+            "STAKES": he_check_stakes(text),
+            "FRONTLOAD": he_check_frontload(text),
+            "ADDRESS": he_check_address(text),
+        }
+    else:
+        results = {
+            "LENGTH": check_length(text),
+            "SPECIFICITY": check_specificity(text),
+            "STAKES": check_stakes(text),
+            "FRONTLOAD": check_frontload(text),
+            "ADDRESS": check_address(text),
+        }
+    rules = HE.DEALBREAKERS if hebrew else DEALBREAKERS
+    flags = [msg for pattern, msg in rules if pattern.search(text)]
     scores = [results[c][0] for c in CHECKS]
     # The weakest property caps the hook, same logic as detect.py: one bad
     # property is enough for the thumb to keep moving.

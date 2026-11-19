@@ -1,13 +1,24 @@
 {
-  "name": "instagram-agent",
-  "description": "Thirteen Claude skills that run an Instagram account: Reels off 26 hook formulas with a scored hook and a timed beat sheet, a research skill that finds what is working in your niche and ranks it by outlier multiple, captions linted against the feed truncation, carousels, stories, profile score, weekly plan, comments, replies, DMs, repurposing, audits, and a humanizer that strips the AI fingerprint before anything ships.",
-  "version": "1.0.0",
+  "name": "instagram-agent-he",
+  "description": "סוכן אינסטגרם בעברית לקלוד, גרסה עברית של Miriam AI: 13 סקילים שמנהלים חשבון אינסטגרם. כתיבת רילס מתוך 26 נוסחאות פתיח בעברית עם ציון ודף תזמון, מחקר של מה שעובד בתחום, כיתובים, קרוסלות, סטוריז, ציון לפרופיל, תוכנית שבועית, תגובות, הודעות, מיחזור, בדיקה ומאניש שמוריד סימני AI מטקסט עברי.",
+  "version": "1.0.0-he",
   "author": {
-    "name": "Jake Schincariol",
-    "url": "https://opusjake.ai"
+    "name": "Miriam AI",
+    "url": "https://www.instagram.com/miriamit.ai/"
   },
-  "homepage": "https://github.com/Jakeschincariol/instagram-agent-skill",
-  "repository": "https://github.com/Jakeschincariol/instagram-agent-skill",
+  "homepage": "https://github.com/miriamit-Ai/instagram-skill-he",
+  "repository": "https://github.com/miriamit-Ai/instagram-skill-he",
   "license": "MIT",
-  "keywords": ["instagram", "reels", "content", "writing", "humanizer", "social", "marketing"]
+  "keywords": [
+    "instagram",
+    "reels",
+    "content",
+    "writing",
+    "humanizer",
+    "social",
+    "marketing",
+    "hebrew",
+    "עברית",
+    "israel"
+  ]
 }
