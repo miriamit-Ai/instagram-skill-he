@@ -67,6 +67,10 @@ cp -r instagram-skill-he/skills/ig-* ~/.claude/skills/
 
 ההוראות המלאות של שאר הסקילים מתורגמות לעברית בהדרגה.
 
-## קרדיט ורישיון
+## English
 
-הגרסה העברית נבנתה על בסיס [instagram-agent-skill](https://github.com/Jakeschincariol/instagram-agent-skill) של Jake Schincariol, שמשוחרר ברישיון MIT. ההתאמה לעברית והתוספות: Miriam AI. פרטים מלאים בקובץ [LICENSE](LICENSE). הקובץ המקורי באנגלית נמצא ב-[README.en.md](README.en.md).
+A Hebrew-first Instagram skill pack for Claude by Miriam AI. Install it the same way (paste the repo link into Claude, or copy `skills/ig-*` into `~/.claude/skills/`). Every skill still answers in English when you write to it in English, and `hookscore.py`, `beats.py` and the humanizer keep their English checks alongside the Hebrew ones.
+
+## רישיון
+
+MIT. פרטים בקובץ [LICENSE](LICENSE).
