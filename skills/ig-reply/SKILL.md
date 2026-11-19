@@ -1,106 +1,74 @@
 ---
 name: ig-reply
 description: >-
-  Handle the comments under the user's own reels and posts - draft replies to
-  the ones worth answering, sorted by which ones are. Use when the user pastes
-  their comments, says "reply to these", "handle my comments", "someone said X
-  on my reel", or is dealing with a critic, a hater or a lead in the comments.
-  Hebrew (Miriam AI edition): תשובות לתגובות. עונה בעברית.
+  מטפל בתגובות מתחת לרילס ולפוסטים של המשתמשת: טיוטות תשובה לתגובות ששווה לענות
+  עליהן, ממוינות לפי חשיבות. להפעיל כשמדביקים תגובות, "תענה לאלה", "תטפל לי
+  בתגובות", "מישהו כתב לי X בריל", או כשמתמודדים עם מבקר, טרול או ליד בתגובות.
+  Hebrew edition by Miriam AI: replies to your own comments.
 ---
 
-# ig-reply
+# ig-reply (גרסה עברית של Miriam AI)
 
-> **גרסה עברית של Miriam AI.** הסקיל הזה עובד בעברית כברירת מחדל:
-> - כל מה שמוצג למשתמשת ונכתב בשבילה, בעברית מדוברת וטבעית, לא עברית של מסמך.
-> - פנייה ברבים (אתם) כברירת מחדל, אלא אם `~/.claude/instagram/voice.md` אומר אחרת. לא מערבבים מגדרים באותו טקסט.
-> - כותבים "פרומפט", "סקיל", "ריל" ו"רילס" כמו שאומרים אותם.
-> - בלי הסימן — (קו מפריד ארוך). זה סימן מובהק לטקסט של AI.
-> - מספרים עם ₪ כשמדובר בכסף בישראל. בודקים שמספרים ומילים באנגלית בתוך משפט עברי מוצגים בסדר הנכון.
-> - שמות הפקודות, הקבצים והכלים (כמו `/ig-reel` או `swipe.py`) נשארים באנגלית.
-> - נוסחאות הפתיח בעברית נמצאות ב-`ig-reel/hooks_he.json`. הכלים ב-Python מזהים עברית לבד.
-> - אם המשתמשת כותבת באנגלית, עונים באנגלית לפי ההוראות למטה.
+שרשור התגובות מתחת לפוסט שלכם הוא המקום שבו נקבעת החשיפה. כל תשובה היא עוד פעולה על הפוסט, תשובות בשעה הראשונה עושות את רוב העבודה, ובאינסטגרם תשובה יכולה להיות גם ריל, וזה המהלך הכי פחות מנוצל בפלטפורמה.
 
-The comment thread under your own post is where reach is decided. Every reply
-is another interaction on the post, replies arriving in the first hour do most
-of the work, and on Instagram a reply can also be a Reel, which is the single
-most underused move on the platform.
+אבל לא כל התגובות שוות אותו דבר, אז הסקיל הזה ממיין לפני שהוא כותב.
 
-But the value is not equal across comments, so this skill sorts before it
-writes.
+## קלט
 
-## Input
+המשתמשת מדביקה את התגובות, רצוי עם שמות המשתמשים. צילומי מסך זה בסדר. לא גורפים את השרשור עם דפדפן.
 
-The user pastes the comments, ideally with handles. Screenshots are fine. Do
-not scrape the thread with a browser tool.
+## קודם ממיינים
 
-## Triage first
+ממיינים כל תגובה לאחת משש קבוצות ואומרים את הספירה בקול:
 
-Sort every comment into one of six buckets and say the counts out loud:
-
-| bucket | what it is | what it gets |
+| קבוצה | מה זה | מה היא מקבלת |
 | --- | --- | --- |
-| **KEYWORD** | the word you asked them to comment | the promised thing, sent by hand or by your approved tool |
-| **LEAD** | someone describing the problem you solve | a real answer in public, then a door |
-| **SUBSTANCE** | adds data, disagrees, extends | the longest reply on the thread |
-| **QUESTION** | a question a lot of people have | this one becomes a Reel, not just a reply |
-| **SUPPORT** | "🔥", "great post", a tag | a like, and 3 to 8 words at most |
-| **NOISE** | pitch, spam, bad faith, bait | nothing, or one line and out |
+| **מילת מפתח** | המילה שביקשתם שיגיבו | הדבר שהובטח, ביד או דרך הכלי המאושר שלכם |
+| **ליד** | מישהו שמתאר את הבעיה שאתם פותרים | תשובה אמיתית בפומבי, ואז דלת |
+| **תוכן** | מוסיף נתון, לא מסכים, מרחיב | התשובה הכי ארוכה בשרשור |
+| **שאלה** | שאלה שהרבה אנשים שואלים | זו הופכת לריל, לא רק לתשובה |
+| **תמיכה** | "🔥", "פוסט מעולה", תיוג | לייק, ולכל היותר 3 עד 8 מילים |
+| **רעש** | מכירה, ספאם, רוע, פרובוקציה | כלום, או שורה אחת ויוצאים |
 
-Write in that order and stop when the value stops.
+כותבים לפי הסדר הזה ועוצרים כשהערך נגמר.
 
-## The move most people miss
+## המהלך שרוב האנשים מפספסים
 
-If a question in the comments is one that thirty other people also have,
-**reply to it with a Reel**. Instagram will attach the comment to the new video
-as a sticker, the person who asked gets notified, and a question with real
-demand behind it becomes a post with the hook already written for you. Flag
-every QUESTION that qualifies and hand it to `/ig-reel` as formula #16.
+אם שאלה בתגובות היא כזו ששלושים אנשים אחרים שואלים גם, **עונים עליה בריל**. אינסטגרם מצמיד את התגובה לסרטון החדש כסטיקר, מי ששאל מקבל התראה, ושאלה עם ביקוש אמיתי הופכת לפוסט שהפתיח שלו כבר כתוב. מסמנים כל שאלה כזו ומעבירים ל-`/ig-reel` כנוסחה #16.
 
-## How to reply
+## איך עונים
 
-- **Answer the actual question.** If someone asks how, tell them how, in the
-  reply. Do not send them to the DMs to hear an answer they could have had.
-- **Use their name once**, at the start, without an exclamation mark.
-- **Match their length.** A four-word comment does not get a four-line reply.
-- **To a critic:** concede the true part first, in their words, then hold the
-  line. Never delete, never get defensive, never reply twice on the same
-  thread.
-- **To a hater:** nothing. A reply is reach, and reach is what they came for.
-  Hide the comment if it is abusive. Instagram's comment controls exist and
-  using them is not losing.
-- **To a lead:** answer fully in public. The door is one sentence at the end
-  and it is an offer of help, not a pitch. The public answer is what makes the
-  next person DM you.
+- **עונים על השאלה עצמה.** אם מישהו שואל איך, אומרים לו איך, בתשובה. לא שולחים לפרטי כדי לשמוע תשובה שהיה יכול לקבל בתגובה.
+- **משתמשים בשם שלו פעם אחת**, בהתחלה, בלי סימן קריאה.
+- **באורך שלו.** תגובה של ארבע מילים לא מקבלת תשובה של ארבע שורות.
+- **למבקר:** קודם מודים בחלק הנכון, במילים שלו, ואז עומדים על שלכם. אף פעם לא מוחקים, לא מתגוננים, ולא עונים פעמיים באותו שרשור.
+- **לטרול:** כלום. תשובה היא חשיפה, ובשביל זה הוא בא. אם התגובה פוגענית, מסתירים אותה. כלי ניהול התגובות של אינסטגרם קיימים, ולהשתמש בהם זה לא להפסיד.
+- **לליד:** עונים במלואה בפומבי. הדלת היא משפט אחד בסוף, והיא הצעה לעזור ולא מכירה. התשובה הפומבית היא מה שגורם לאדם הבא לשלוח לכם הודעה.
+- **בעברית:** פונים במגדר של מי שכתב, לפי השם או הניסוח שלו. כשלא ברור, מנסחים בלי מגדר.
 
-## Keyword comments
+## תגובות של מילת מפתח
 
-If the post used a keyword ask, those comments are the whole point of the post.
-Every one of them is a person who raised their hand. Reply to each, then send
-what was promised. If the user has automation set up through Instagram's own
-tools or an approved partner, say so and let it run; if not, the replies are
-manual and that is fine at this volume. Never bulk-DM people who did not
-comment.
+אם בפוסט הייתה בקשה למילת מפתח, התגובות האלה הן כל הטעם של הפוסט. כל אחת היא אדם שהרים יד. עונים לכל אחת, ואז שולחים את מה שהובטח. אם למשתמשת יש אוטומציה דרך הכלים של אינסטגרם או שותף מאושר, אומרים את זה ונותנים לה לרוץ. אם לא, התשובות ידניות, וזה בסדר בכמות הזאת. אף פעם לא שולחים הודעות בכמויות למי שלא הגיב.
 
-## Output
+## פלט
 
-One block, grouped by bucket, each reply copy-ready and already humanized:
+בלוק אחד, מקובץ לפי קבוצות, כל תשובה מוכנה להעתקה ואחרי האנשה:
 
 ```
-REPLIES  ·  84 comments  ·  41 KEYWORD, 2 LEAD, 3 SUBSTANCE, 2 QUESTION, 34 SUPPORT, 2 NOISE
+תשובות  ·  84 תגובות  ·  41 מילת מפתח, 2 ליד, 3 תוכן, 2 שאלה, 34 תמיכה, 2 רעש
 
-KEYWORD  (41)  send the clause. One line each, same warmth, not copy-paste.
+מילת מפתח  (41)  לשלוח את הסעיף. שורה אחת לכל אחד, אותו חום, לא העתק הדבק.
 
-LEAD
-@handle - "we had this exact thing happen in June"
-> The bit that fixed it for us was moving the payment trigger off approval
-> entirely. Happy to send the wording if it is useful.
+ליד
+@handle - "קרה לנו בדיוק אותו דבר ביוני"
+> מה שפתר את זה אצלנו היה להוציא לגמרי את התשלום מהאישור. אשמח לשלוח
+> את הנוסח אם זה יעזור.
 
-QUESTION -> REEL
-@handle - "what do you do if they refuse to sign it?"
-  34 likes on this comment. That is a Reel, not a reply. Formula #16.
+שאלה ← ריל
+@handle - "מה עושים אם הם מסרבים לחתום?"
+  34 לייקים על התגובה הזאת. זה ריל, לא תשובה. נוסחה #16.
 
-NOISE  (2)  skipped. Replying gives them reach.
+רעש  (2)  דילגנו. תשובה נותנת להם חשיפה.
 ```
 
-Then the gate: nothing is posted until the user says yes. They paste the
-replies.
+ואז השער: שום דבר לא מתפרסם עד שהמשתמשת אומרת כן. היא מדביקה את התשובות בעצמה.

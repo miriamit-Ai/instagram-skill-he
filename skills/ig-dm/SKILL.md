@@ -1,129 +1,81 @@
 ---
 name: ig-dm
 description: >-
-  Write Instagram DMs that get replies - the keyword delivery, the first
-  message to someone who engaged, the collab pitch, and the two follow-ups. Use
-  when the user says "DM this person", "what do I send them", "outreach
-  message", "how do I follow up", "pitch this brand", or is reaching out to
-  someone specific.
-  Hebrew (Miriam AI edition): הודעות פרטיות. עונה בעברית.
+  כותב הודעות פרטיות באינסטגרם שמקבלות תשובה: מסירה אחרי מילת מפתח, הודעה ראשונה
+  למי שהגיב, הצעה לשיתוף פעולה, ושתי הודעות מעקב. להפעיל כשמבקשים "תכתוב לו
+  הודעה", "מה לשלוח לה", "הודעת פנייה", "איך עושים מעקב", "פנייה למותג", או כשפונים
+  למישהו ספציפי. Hebrew edition by Miriam AI: DMs.
 ---
 
-# ig-dm
+# ig-dm (גרסה עברית של Miriam AI)
 
-> **גרסה עברית של Miriam AI.** הסקיל הזה עובד בעברית כברירת מחדל:
-> - כל מה שמוצג למשתמשת ונכתב בשבילה, בעברית מדוברת וטבעית, לא עברית של מסמך.
-> - פנייה ברבים (אתם) כברירת מחדל, אלא אם `~/.claude/instagram/voice.md` אומר אחרת. לא מערבבים מגדרים באותו טקסט.
-> - כותבים "פרומפט", "סקיל", "ריל" ו"רילס" כמו שאומרים אותם.
-> - בלי הסימן — (קו מפריד ארוך). זה סימן מובהק לטקסט של AI.
-> - מספרים עם ₪ כשמדובר בכסף בישראל. בודקים שמספרים ומילים באנגלית בתוך משפט עברי מוצגים בסדר הנכון.
-> - שמות הפקודות, הקבצים והכלים (כמו `/ig-reel` או `swipe.py`) נשארים באנגלית.
-> - נוסחאות הפתיח בעברית נמצאות ב-`ig-reel/hooks_he.json`. הכלים ב-Python מזהים עברית לבד.
-> - אם המשתמשת כותבת באנגלית, עונים באנגלית לפי ההוראות למטה.
+ההודעות הפרטיות באינסטגרם הן המקום היחיד בפלטפורמה שבו כסף באמת עובר ידיים, והן גם המקום שבו רוב החשבונות שורפים את הרצון הטוב שהתוכן שלהם הרוויח. ההבדל הוא כולו במי זז ראשון.
 
-Instagram DMs are the only place on the platform where money actually changes
-hands, and they are also where most accounts burn the goodwill their content
-earned. The difference is entirely about who moved first.
+## שלושה סוגי הודעות, ורק שלושה שווים כתיבה
 
-## The three kinds of DM, and only three are worth writing
+**1. תשובה ליד שהורמה.** הגיבו את מילת המפתח, ענו לסקר, ענו לסטורי, או שמרו ושאלו. הם זזו ראשונים. זה 90% מההודעות ששווה לשלוח, והן ממירות כי זו לא פנייה קרה.
 
-**1. The reply to a hand raised.** They commented the keyword, answered the
-poll, replied to a story, or saved and asked. They moved first. This is 90% of
-the DMs worth sending and it converts because it is not outreach.
+**2. פנייה חמה.** מישהו שהמשתמשת באמת מגיבה לפוסטים שלו כבר שבועות. כבר יש חוט של שיחה.
 
-**2. The warm approach.** Someone whose posts the user has genuinely been
-commenting on for weeks. There is a shared thread of conversation already.
+**3. הצעה לשיתוף פעולה או למותג.** הצעה ספציפית לחשבון ספציפי, עם סיבה למה דווקא הוא.
 
-**3. The collab or brand pitch.** A specific proposal to a specific account,
-with a reason it is them.
+כל השאר זה הודעות קרות לזרים, וזה מה שכולם עושים, ובגלל זה אחוזי התשובה נראים כמו שהם נראים. אם המשתמשת מבקשת רצף של פניות קרות, אומרים בפשטות שזה הדבר עם התשואה הכי נמוכה שהיא יכולה לעשות באותה שעה, ומציעים חלופה: קודם להגיב לעשרת החשבונות האלה במשך שבועיים. אם היא עדיין רוצה, כותבים.
 
-Everything else is cold DMing strangers, which is what everybody else does, and
-it is why reply rates sit where they do. If the user is asking for a cold
-sequence, say plainly that it is the lowest-yield thing they could do with the
-same hour, and offer the alternative: comment on those ten accounts for two
-weeks first. Then write it if they still want it.
+## לפני שכותבים, משיגים פרטים
 
-## Before writing, get the specifics
+בשאלה אחת מרוכזת:
 
-Ask in one batched question:
+1. **מי**: שם משתמש, מה הוא עושה, ומה הוא פרסם או עשה שהתחיל את זה.
+2. **הטריגר**: הסיבה האמיתית לכתוב היום. מילת מפתח שהגיב, סטורי שענה עליו, פוסט שפרסם. לא "הוא מתאים לקהל היעד".
+3. **מה המשתמשת רוצה**: שיחה, מכירה, שיתוף פעולה, הפניה. בכנות, גם אם ההודעה לא מתחילה בזה.
 
-1. **Who** - handle, what they do, and what they posted or did that started
-   this.
-2. **The trigger** - the actual reason to message today. A keyword they
-   commented, a story they replied to, a post they published. Not "they fit the
-   ICP".
-3. **What the user wants** - a conversation, a sale, a collab, a referral. Be
-   honest internally, even if the message does not lead with it.
+אם אין טריגר, אין הודעה. אומרים את זה.
 
-If there is no trigger, there is no message. Say so.
+## מסירה אחרי מילת מפתח
 
-## The keyword delivery
-
-The most common DM in this pack and the easiest to ruin. They commented one
-word. They are expecting the thing. So:
+ההודעה הכי נפוצה בחבילה והכי קל להרוס אותה. הם הגיבו מילה אחת. הם מחכים לדבר. אז:
 
 ```
-{their name}, here it is: {the thing, or the link}.
+{השם שלהם}, הנה זה: {הדבר, או הקישור}.
 
-{one line on how to use it}
+{שורה אחת על איך משתמשים בזה}
 
-{one question they can answer in four words}
+{שאלה אחת שאפשר לענות עליה בארבע מילים}
 ```
 
-Send the thing **first**, in message one, with no gate. A keyword post that
-delivers a "before I send it, can I ask what you do?" is a bait and switch and
-it is remembered. The question at the end is what starts the conversation, and
-it is optional for them.
+שולחים את הדבר **ראשון**, בהודעה הראשונה, בלי תנאים. פוסט עם מילת מפתח שמחזיר "לפני שאני שולחת, אפשר לשאול במה את עוסקת?" הוא פיתיון והחלפה, וזוכרים את זה. השאלה בסוף היא מה שפותח שיחה, ולענות עליה זה לבחירתם.
 
-Automated keyword replies are a supported feature for professional accounts,
-through Instagram's own tools or an approved partner. Using that is fine.
-Sending unsolicited bulk DMs is not, and it is the fastest route to a
-restricted account.
+תשובות אוטומטיות לפי מילת מפתח הן יכולת נתמכת לחשבונות מקצועיים, דרך הכלים של אינסטגרם או שותף מאושר. להשתמש בזה זה בסדר. לשלוח הודעות בכמויות למי שלא ביקש, לא, וזו הדרך הכי מהירה לחשבון מוגבל.
 
-## The first message to someone warm
+## הודעה ראשונה למישהו חם
 
-- **Two to four sentences.** A screen of text is a delete.
-- **Reference the specific thing.** The comment, the post, the reply. In their
-  words.
-- **Give before asking.** A number, a template, a name, an answer.
-- **One ask, small.** "Worth a quick call?" beats "let me walk you through the
-  platform".
-- **No link and no calendar in message one.** It reads as a funnel because it
-  is one.
-- **No voice note to a stranger.** It is a great tool and it is for people who
-  already know the user's voice.
+- **שניים עד ארבעה משפטים.** מסך של טקסט נמחק.
+- **מתייחסים לדבר הספציפי.** התגובה, הפוסט, התשובה. במילים שלו.
+- **נותנים לפני שמבקשים.** מספר, תבנית, שם, תשובה.
+- **בקשה אחת, קטנה.** "שווה שיחה קצרה?" עדיף על "בואי אראה לך את כל המערכת".
+- **בלי קישור ובלי יומן בהודעה הראשונה.** זה נקרא כמו משפך, כי זה משפך.
+- **בלי הודעה קולית לזר.** זה כלי מעולה, והוא למי שכבר מכיר את הקול של המשתמשת.
+- **בעברית:** פונים במגדר הנכון לפי הפרופיל. כשלא ברור, מנסחים בלי מגדר. לא מתחילים ב"היי! שאלה קטנה" ואז לא שואלים שאלה.
 
-## The collab pitch
+## הצעה לשיתוף פעולה
 
-Four lines, in this order: what you have watched them do, the specific idea,
-what they get, what you need from them. A collab post lands on both grids and
-reaches both audiences, which is the strongest single growth mechanic on
-Instagram that does not involve paying anybody. Pitch it as that and be
-concrete about who does what.
+ארבע שורות, בסדר הזה: מה ראיתם אותו עושה, הרעיון הספציפי, מה הוא מקבל, מה אתם צריכים ממנו. פוסט שיתופי מופיע בשני התשבצים ומגיע לשני הקהלים, וזה מנגנון הצמיחה הכי חזק באינסטגרם שלא כרוך בתשלום לאף אחד. מציעים את זה ככה, ומפרטים מי עושה מה.
 
-## Follow-ups
+## הודעות מעקב
 
-Two. That is the number.
+שתיים. זה המספר.
 
-- **+4 days** - add something new. Never "just bumping this". If there is
-  nothing new, there is no follow-up.
-- **+10 days** - the close-the-loop message. Say you will stop, and mean it.
-  This one gets a surprising share of the total replies, because it removes the
-  pressure.
+- **אחרי 4 ימים**: מוסיפים משהו חדש. אף פעם לא "רק מקפיצה את זה". אם אין משהו חדש, אין מעקב.
+- **אחרי 10 ימים**: הודעת סגירה. אומרים שתפסיקו, ומתכוונים. ההודעה הזאת מקבלת חלק מפתיע מכל התשובות, כי היא מורידה את הלחץ.
 
-Then stop. A third converts nobody and costs the relationship.
+ואז עוצרים. שלישית לא ממירה אף אחד ועולה בקשר.
 
-## Never
+## אף פעם
 
-- Never automate outreach DMs, and never use a tool that sends on a schedule to
-  people who did not interact. It violates Instagram's Terms of Use and
-  restricts the account.
-- Never fabricate having watched something, a mutual, or a shared anything.
-- Never open with "Hey! Quick question" and then not ask a question.
-- Never send the pitch in the same message as the compliment.
+- לא הופכים פניות לאוטומציה, ולא משתמשים בכלי ששולח לפי לוח זמנים לאנשים שלא פנו. זה מפר את תנאי השימוש של אינסטגרם ומגביל את החשבון.
+- לא ממציאים שצפיתם במשהו, מכר משותף, או משהו משותף אחר.
+- לא שולחים את ההצעה באותה הודעה עם המחמאה.
 
-## Output
+## פלט
 
-The message, the character count, and the two follow-ups with the day each
-goes out, all run through `/ig-human`. The user sends every one of them by
-hand, or through their own approved automation for keyword replies only.
+ההודעה, מספר התווים, ושתי הודעות המעקב עם היום שבו כל אחת יוצאת, הכול אחרי `/ig-human`. המשתמשת שולחת כל אחת ביד, או דרך האוטומציה המאושרת שלה, רק לתשובות של מילת מפתח.
